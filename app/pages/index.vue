@@ -1,23 +1,14 @@
 <template>
   <section class="container">
+    <AppHeader></AppHeader>
     <h1>テスト</h1>
   </section>
 </template>
 
 <script>
-import AppLogo from '~/components/AppLogo.vue'
 
 export default {
-  async asyncData({app, error}){
-      const response = await app.$axios.$get('http://server:8080/test')
-      return resdata = response;
-  },
-  data(){
-    return {resdata : []}
-  },
-  mounted(){
-    console.log(resdata)
-  }
+
 }
 
 </script>
