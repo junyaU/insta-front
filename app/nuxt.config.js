@@ -1,4 +1,7 @@
 module.exports = {
+  plugins: [
+    '~plugins/ui'
+  ],
   /*
   ** Headers of the page
   */
