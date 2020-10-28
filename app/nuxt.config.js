@@ -46,6 +46,9 @@ module.exports = {
   },
   proxy: {
     '/api/': 'http://server:8080',
-  }
+  },
+  css: [
+    '@/assets/css/main.css',
+  ],
 
 }
