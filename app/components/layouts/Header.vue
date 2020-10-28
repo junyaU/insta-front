@@ -1,13 +1,19 @@
 <template>
   <header>
       <div class="header-parts">
-        <p>Home</p>
+        <nuxt-link to="/posthome">
+          <p>Home</p>
+        </nuxt-link>
       </div>
       <div class="header-parts">
-        <p>Login</p>
+        <nuxt-link to="/">
+          <p>Login</p>
+        </nuxt-link>
       </div>
       <div class="header-parts">
-        <p>Post</p>
+        <nuxt-link to="/postform">
+          <p>Post</p>
+        </nuxt-link>
       </div>
   </header>
 </template>
@@ -33,5 +39,9 @@ export default {
 
   .header-parts{
     cursor: pointer;
+  }
+  a{
+    text-decoration: none;
+    color: inherit;
   }
 </style>
