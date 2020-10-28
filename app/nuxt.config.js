@@ -42,6 +42,10 @@ module.exports = {
     '@nuxtjs/axios'
   ],
   axios: {
+    proxy: true
   },
+  proxy: {
+    '/api/': 'http://server:8080',
+  }
 
 }
