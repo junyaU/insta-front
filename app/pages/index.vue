@@ -2,12 +2,16 @@
   <section class="container">
     <AppHeader></AppHeader>
     <h1 class="title">Instagram</h1>
+    <p class="register-text">アカウントを登録する</p>
     <div>
       <form action="/api/signup" method="POST" class="login-form">
         <InputComponent label="名前" name="Name" type="text"></InputComponent>
         <InputComponent label="メールアドレス" name="Email" type="email"></InputComponent>
         <InputComponent label="パスワード" name="Password" type="password"></InputComponent>
         <SubmitButton></SubmitButton>
+        <nuxt-link to="/login">
+          <p class="login-text">アカウントをお持ちの方はこちらから</p>
+        </nuxt-link>
       </form>
     </div>
   </section>
@@ -16,7 +20,15 @@
 <script>
 
 export default {
+  data(){
+    return {
+      coo1: this.$cookies.get('beegosessionId')
+    }
+  },
 
+  mounted(){
+    console.log(this.coo1)
+  }
 }
 
 </script>
@@ -36,4 +48,16 @@ export default {
   margin-top: 20px;
 }
 
+a{
+  text-decoration: none;
+}
+
+.login-text{
+  margin-top: 10px;
+}
+
+.register-text{
+  font-size: 20px;
+  font-weight: 500;
+}
 </style>
