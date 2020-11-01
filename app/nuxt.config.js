@@ -39,10 +39,12 @@ module.exports = {
     }
   },
   modules: [
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    ['cookie-universal-nuxt', { parseJSON: false }]
   ],
   axios: {
-    proxy: true
+    proxy: true,
+    credentials: true
   },
   proxy: {
     '/api/': 'http://server:8080',

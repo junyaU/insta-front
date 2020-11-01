@@ -4,7 +4,7 @@
     <h1>Post List</h1>
     <div class="post-wrapper">
       <div class="post-content" v-for="(data, index) in datas" :key="index">
-        <h2 class="user-name">じゅんや</h2>
+        <h2 class="user-name">{{data.User.Name}}</h2>
         <div class="image-wrapper">
           <h1>ここに画像がきます</h1>
         </div>
