@@ -5,7 +5,6 @@
     <form action="/api/post">
       <TextArea name="Comment"></TextArea>
       <input type="hidden" name="Image" value="jajajaj">
-      <input type="hidden" name="UserId" value="1">
       <SubmitButton></SubmitButton>
     </form>
   </div>

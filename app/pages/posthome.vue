@@ -11,6 +11,7 @@
         <div class="comment-wrapper">
           <p>{{data.Comment}}</p>
         </div>
+        <span class="favo-button" @click="favorite(data.Id)">♡{{data.Favonum}}</span>
       </div>
     </div>
   </div>
@@ -24,13 +25,26 @@ export default {
     return {datas}
   },
 
+  methods: {
+    favorite(id){
+      const favoriteUrl = "/api/favorite";
+      const formData = new FormData();
+
+      formData.append('postid', id);
+      this.$axios.post(favoriteUrl, formData)
+    }
+  }
+
+
+
 }
 </script>
 
 <style>
   .post-content{
     border: 2px solid black;
-    margin: 15px 0
+    margin: 15px 0;
+    position: relative;
   }
 
   .post-wrapper{
@@ -54,5 +68,13 @@ export default {
   .comment-wrapper{
     width: 60%;
     padding: 15px;
+  }
+
+  .favo-button{
+    position: absolute;
+    font-size: 30px;
+    right: 3%;
+    bottom: 2%;
+    cursor: pointer;
   }
 </style>
