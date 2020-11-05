@@ -4,7 +4,11 @@
     <h1>Post List</h1>
     <div class="post-wrapper">
       <div class="post-content" v-for="(data, index) in datas" :key="index">
-        <h2 class="user-name">{{data.User.Name}}</h2>
+        <h2 class="user-name">
+          <nuxt-link :to="{name: 'mypage-id', params: {id: data.User.Id}}">
+            {{data.User.Name}}
+          </nuxt-link>
+        </h2>
         <div class="image-wrapper">
           <h1>ここに画像がきます</h1>
         </div>
@@ -35,12 +39,10 @@ export default {
     }
   }
 
-
-
 }
 </script>
 
-<style>
+<style scoped>
   .post-content{
     border: 2px solid black;
     margin: 15px 0;
@@ -76,5 +78,8 @@ export default {
     right: 3%;
     bottom: 2%;
     cursor: pointer;
+  }
+  a{
+    color: inherit;
   }
 </style>
