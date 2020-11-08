@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-    <AppHeader></AppHeader>
+    <AppHeader :session="sessionData"></AppHeader>
     <h1 class="title">Instagram</h1>
     <p class="register-text">アカウントを登録する</p>
     <div>
@@ -20,6 +20,11 @@
 <script>
 
 export default {
+  async asyncData({app}){
+    const sessionData = await app.$axios.$get(`/api/getsession`)
+    console.log(sessionData)
+    return {sessionData}
+  },
 }
 
 </script>

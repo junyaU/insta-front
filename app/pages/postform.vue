@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <AppHeader></AppHeader>
+    <AppHeader :session="sessionData"></AppHeader>
     <h1>Post Form</h1>
     <form action="/api/post"  enctype="multipart/form-data" method="post">
       <TextArea name="Comment"></TextArea>
@@ -14,9 +14,9 @@
 <script>
 export default {
 async asyncData({app}){
-    const sessData = await app.$axios.$get(`/api/getsession`)
-    console.log(sessData)
-    return {sessData}
+    const sessionData = await app.$axios.$get(`/api/getsession`)
+    console.log(sessionData)
+    return {sessionData}
   },
 }
 </script>
