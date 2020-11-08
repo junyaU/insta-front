@@ -21,7 +21,7 @@
     </div>
     <div class="post-area">
       <div class="post-wrapper" v-for="(post, index) in data.Posts" :key="index">
-        <h3>{{post.Comment}}</h3>
+        <img :src="imageHeader + post.Image" class="post-image">
       </div>
     </div>
   </div>
@@ -35,12 +35,13 @@ export default {
     const profileImageData = await app.$axios.$get(`/api/getprofileimage/${paramId}`)
     const sessionData = await app.$axios.$get(`/api/getsession`)
     let imageData = ""
+    const imageHeader = 'data:image/jpg;base64,'
 
     //画像データがあれば読み込む
     if(profileImageData.image){
-      imageData = 'data:image/jpg;base64,' + profileImageData.image;
+      imageData = imageHeader + profileImageData.image;
     }
-    return {data, imageData,sessionData}
+    return {data, imageData, sessionData, imageHeader}
   }
 }
 </script>
@@ -75,5 +76,12 @@ export default {
   .image-data{
     width: 100%;
     height: 100%;
+    object-fit: cover;
+  }
+
+  .post-image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 </style>
