@@ -10,7 +10,7 @@
           </nuxt-link>
         </h2>
         <div class="image-wrapper">
-          <h1>ここに画像がきます</h1>
+          <img :src="imageHeader + data.Image" class="image-photo">
         </div>
         <div class="comment-wrapper">
           <p>{{data.Comment}}</p>
@@ -25,8 +25,8 @@
 export default {
   async asyncData({app}) {
     const datas = await app.$axios.$get(`/api/getpost`);
-    console.log(datas)
-    return {datas}
+    const imageHeader = 'data:image/jpg;base64,'
+    return {datas, imageHeader}
   },
 
   methods: {
@@ -79,7 +79,14 @@ export default {
     bottom: 2%;
     cursor: pointer;
   }
+
   a{
     color: inherit;
+  }
+
+  .image-photo{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 </style>

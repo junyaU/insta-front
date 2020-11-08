@@ -2,9 +2,10 @@
   <div class="container">
     <AppHeader></AppHeader>
     <h1>Post Form</h1>
-    <form action="/api/post">
+    <form action="/api/post"  enctype="multipart/form-data" method="post">
       <TextArea name="Comment"></TextArea>
-      <input type="hidden" name="Image" value="jajajaj">
+
+      <InputComponent label="画像" name="Image" type="file"></InputComponent>
       <SubmitButton></SubmitButton>
     </form>
   </div>
