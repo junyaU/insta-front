@@ -12,7 +12,11 @@
 
 <script>
 export default {
-
+async asyncData({app}){
+    const sessData = await app.$axios.$get(`/api/getsession`)
+    console.log(sessData)
+    return {sessData}
+  },
 }
 </script>
 

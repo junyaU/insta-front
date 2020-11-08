@@ -20,15 +20,6 @@
 <script>
 
 export default {
-  data(){
-    return {
-      coo1: this.$cookies.get('beegosessionId')
-    }
-  },
-
-  mounted(){
-    console.log(this.coo1)
-  }
 }
 
 </script>

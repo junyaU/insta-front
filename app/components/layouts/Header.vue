@@ -20,6 +20,10 @@
 
 <script>
 export default {
+  async asyncData({app}){
+    const sessionData = await app.$axios.$get(`/api/getsession`)
+    return {sessionData}
+  },
 }
 </script>
 
