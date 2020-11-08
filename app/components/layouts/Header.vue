@@ -6,9 +6,10 @@
         </nuxt-link>
       </div>
       <div class="header-parts">
-        <nuxt-link to="/">
-          <p>Login</p>
+        <nuxt-link to="/" v-if="!session">
+          <p>login</p>
         </nuxt-link>
+        <a href="/api/logout" v-else>Logout</a>
       </div>
       <div class="header-parts">
         <nuxt-link to="/postform">
@@ -20,10 +21,7 @@
 
 <script>
 export default {
-  async asyncData({app}){
-    const sessionData = await app.$axios.$get(`/api/getsession`)
-    return {sessionData}
-  },
+  props:["session"],
 }
 </script>
 

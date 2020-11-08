@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <AppHeader></AppHeader>
+    <AppHeader :session="sessionData"></AppHeader>
     <h1>Post List</h1>
     <div class="post-wrapper">
       <div class="post-content" v-for="(data, index) in datas" :key="index">
@@ -26,7 +26,9 @@ export default {
   async asyncData({app}) {
     const datas = await app.$axios.$get(`/api/getpost`);
     const imageHeader = 'data:image/jpg;base64,'
-    return {datas, imageHeader}
+    const sessionData = await app.$axios.$get(`/api/getsession`)
+    console.log(sessionData)
+    return {datas, imageHeader, sessionData}
   },
 
   methods: {

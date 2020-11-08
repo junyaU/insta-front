@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <AppHeader></AppHeader>
+    <AppHeader :session="sessionData"></AppHeader>
     <h1>プロフィール画像設定</h1>
     <form action="/api/upload" method="post" enctype="multipart/form-data">
       <input type="file" name="Image">
@@ -12,7 +12,11 @@
 
 <script>
 export default {
-
+  async asyncData({app}){
+    const sessionData = await app.$axios.$get(`/api/getsession`)
+    console.log(sessionData)
+    return {sessionData}
+  },
 }
 </script>
 

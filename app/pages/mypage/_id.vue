@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <AppHeader></AppHeader>
+    <AppHeader :session="sessionData"></AppHeader>
     <div class="profile-area">
-      <div class="photo-wrapper">
-        <div id="photo-image">
+      <div class="upper-wrapper">
+        <div class="photo-image">
           <img v-if="imageData" :src="imageData"  class="image-data">
           <p v-else>画像未設定</p>
         </div>
@@ -11,12 +11,16 @@
           <p>プロフィール画像を設定</p>
         </nuxt-link>
       </div>
-      <div class="name-wrapper">
-        <h2>{{data.Name}}</h2>
+      <div class="upper-wrapper">
+        <div class="upper-text-wrapper">
+          <h2>{{data.Name}}</h2>
+        </div>
       </div>
-      <div class="good-wrapper">
-        <h5>いいね合計数</h5>
-        <h2>{{data.TotalFavorited}}</h2>
+      <div class="upper-wrapper">
+        <div class="upper-text-wrapper">
+          <h5>いいね合計数</h5>
+          <h2>{{data.TotalFavorited}}</h2>
+        </div>
       </div>
     </div>
     <div class="post-area">
@@ -55,10 +59,10 @@ export default {
     padding: 20px 0;
   }
 
-  #photo-image{
+  .photo-image{
     border: 1px solid black;
-    height: 200px;
-    width: 200px;
+    width: 100%;
+    height: 100%;
   }
 
   .post-area{
@@ -66,10 +70,19 @@ export default {
     flex-wrap: wrap;
   }
 
+  .upper-wrapper{
+    height: 200px;
+    width: 200px;
+  }
+
+  .upper-text-wrapper{
+    margin-top: 80px;
+  }
+
   .post-wrapper{
     border: 1px solid #cccc;
     margin: 0 ;
-    width: 480px ;
+    width: 480px;
     height:400px;
   }
 
