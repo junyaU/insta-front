@@ -7,7 +7,7 @@
           <img v-if="imageData" :src="imageData"  class="image-data">
           <p v-else>画像未設定</p>
         </div>
-        <nuxt-link :to="{name: 'image-id', params: {id: data.Id}}" v-if="data.Id == sessionData.userid">
+        <nuxt-link :to="{name: 'image-id', params: {id: data.Id}}" v-if="data.Id == sessionData.Id">
           <p>プロフィール画像を設定</p>
         </nuxt-link>
       </div>
