@@ -25,7 +25,9 @@
     </div>
     <div class="post-area">
       <div class="post-wrapper" v-for="(post, index) in data.Posts" :key="index">
-        <img :src="imageHeader + post.Image" class="post-image">
+        <nuxt-link :to="{name: 'postdetail-id', params:{id: post.Id}}">
+          <img :src="imageHeader + post.Image" class="post-image">
+        </nuxt-link>
       </div>
     </div>
   </div>
