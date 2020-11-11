@@ -12,7 +12,10 @@
         <a href="/api/logout" v-else>Logout</a>
       </div>
       <div class="header-parts">
-        <nuxt-link to="/postform">
+        <nuxt-link to="/postform" v-if="session">
+          <p>Post</p>
+        </nuxt-link>
+        <nuxt-link to="/" v-else>
           <p>Post</p>
         </nuxt-link>
       </div>
