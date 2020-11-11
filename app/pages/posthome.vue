@@ -38,7 +38,7 @@ export default {
       let favorited = e.currentTarget.getAttribute("data-favorited");
       const userId = this.sessionData.Id;
       const formData = new FormData();
-      if(favorited == true){
+      if(favorited == true || !this.sessionData){
         return
       }
       e.currentTarget.dataset.favorited = 1
