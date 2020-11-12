@@ -38,7 +38,7 @@ export default {
       let favorited = e.currentTarget.getAttribute("data-favorited");
       const userId = this.sessionData.Id;
       const formData = new FormData();
-      if(favorited == true){
+      if(favorited == true || !this.sessionData){
         return
       }
       e.currentTarget.dataset.favorited = 1
@@ -65,7 +65,7 @@ export default {
 
 <style scoped>
   .post-content{
-    border: 2px solid black;
+    border: 2px solid #000000;
     margin: 15px 0;
     position: relative;
   }
@@ -113,6 +113,6 @@ export default {
   }
 
   .favorited{
-    color: red;
+    color: #ff0000;
   }
 </style>

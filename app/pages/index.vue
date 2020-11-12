@@ -18,7 +18,6 @@
 </template>
 
 <script>
-
 export default {
   async asyncData({app}){
     const sessionData = await app.$axios.$get(`/api/getsession`)
@@ -26,11 +25,9 @@ export default {
     return {sessionData}
   },
 }
-
 </script>
 
 <style>
-
 .title {
   font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 1 */
   display: block;
