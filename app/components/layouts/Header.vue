@@ -46,6 +46,7 @@ export default {
   .header-parts{
     cursor: pointer;
   }
+
   a{
     text-decoration: none;
     color: inherit;

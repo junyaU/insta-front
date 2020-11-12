@@ -62,7 +62,7 @@ export default {
   }
 
   .photo-image{
-    border: 1px solid black;
+    border: 1px solid #000000;
     width: 100%;
     height: 100%;
   }
