@@ -1,45 +1,56 @@
 <template>
   <section class="container">
-    <AppHeader></AppHeader>
-    <h1>テスト</h1>
+    <AppHeader :session="sessionData"></AppHeader>
+    <h1 class="title">Instagram</h1>
+    <p class="register-text">アカウントを登録する</p>
+    <div>
+      <form action="/api/signup" method="POST" class="login-form">
+        <InputComponent label="名前" name="Name" type="text"></InputComponent>
+        <InputComponent label="メールアドレス" name="Email" type="email"></InputComponent>
+        <InputComponent label="パスワード" name="Password" type="password"></InputComponent>
+        <SubmitButton></SubmitButton>
+        <nuxt-link to="/login">
+          <p class="login-text">アカウントをお持ちの方はこちらから</p>
+        </nuxt-link>
+      </form>
+    </div>
   </section>
 </template>
 
 <script>
-
 export default {
-
+  async asyncData({app}){
+    const sessionData = await app.$axios.$get(`/api/getsession`)
+    console.log(sessionData)
+    return {sessionData}
+  },
 }
-
 </script>
 
 <style>
-.container {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
 .title {
   font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 1 */
   display: block;
   font-weight: 300;
-  font-size: 100px;
+  font-size: 70px;
   color: #35495e;
   letter-spacing: 1px;
 }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
+.login-form{
+  margin-top: 20px;
 }
 
-.links {
-  padding-top: 15px;
+a{
+  text-decoration: none;
+}
+
+.login-text{
+  margin-top: 10px;
+}
+
+.register-text{
+  font-size: 20px;
+  font-weight: 500;
 }
 </style>

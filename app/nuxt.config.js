@@ -39,9 +39,17 @@ module.exports = {
     }
   },
   modules: [
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
   ],
   axios: {
+    proxy: true,
+    credentials: true,
   },
+  proxy: {
+    '/api/': 'http://server:8080',
+  },
+  css: [
+    '@/assets/css/main.css',
+  ],
 
 }

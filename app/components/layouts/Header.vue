@@ -1,20 +1,30 @@
 <template>
   <header>
       <div class="header-parts">
-        <p>Home</p>
+        <nuxt-link to="/posthome">
+          <p>Home</p>
+        </nuxt-link>
       </div>
       <div class="header-parts">
-        <p>Login</p>
+        <nuxt-link to="/" v-if="!session">
+          <p>login</p>
+        </nuxt-link>
+        <a href="/api/logout" v-else>Logout</a>
       </div>
       <div class="header-parts">
-        <p>Post</p>
+        <nuxt-link to="/postform" v-if="session">
+          <p>Post</p>
+        </nuxt-link>
+        <nuxt-link to="/" v-else>
+          <p>Post</p>
+        </nuxt-link>
       </div>
   </header>
 </template>
 
 <script>
 export default {
-
+  props:["session"],
 }
 </script>
 
@@ -30,9 +40,15 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-around;
+    z-index: 100;
   }
 
   .header-parts{
     cursor: pointer;
+  }
+
+  a{
+    text-decoration: none;
+    color: inherit;
   }
 </style>
