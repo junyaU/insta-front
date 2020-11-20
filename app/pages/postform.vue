@@ -1,26 +1,27 @@
 <template>
   <div class="container">
-    <AppHeader :session="sessionData"></AppHeader>
-    <h1>Post Form</h1>
-    <form action="/api/post"  enctype="multipart/form-data" method="post">
-      <TextArea name="Comment"></TextArea>
-
-      <InputComponent label="画像" name="Image" type="file"></InputComponent>
-      <SubmitButton></SubmitButton>
-    </form>
+    <client-only placeholder="Loading…">
+      <AppHeader :session="sessionData"></AppHeader>
+      <h1>Post Form</h1>
+      <form :action="url + `/api/post`"  enctype="multipart/form-data" method="post">
+        <TextArea name="Comment"></TextArea>
+        <InputComponent label="pngファイルを登録してください" name="Image" type="file"></InputComponent>
+        <SubmitButton></SubmitButton>
+      </form>
+    </client-only>
   </div>
 </template>
 
 <script>
 export default {
 async asyncData({app}){
-    const sessionData = await app.$axios.$get(`/api/getsession`)
-    console.log(sessionData)
+    const sessionData = await app.$axios.$get(`${process.env.API_URL}/api/getsession`)
     return {sessionData}
   },
+    computed: {
+    url(){
+      return process.env.API_URL
+    }
+  }
 }
 </script>
-
-<style>
-
-</style>

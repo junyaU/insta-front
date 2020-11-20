@@ -1,5 +1,6 @@
 <template>
   <header>
+    <client-only placeholder="Loading…">
       <div class="header-parts">
         <nuxt-link to="/posthome">
           <p>Home</p>
@@ -9,7 +10,7 @@
         <nuxt-link to="/" v-if="!session">
           <p>login</p>
         </nuxt-link>
-        <a href="/api/logout" v-else>Logout</a>
+        <a :href="url + `/api/logout`" v-else>Logout</a>
       </div>
       <div class="header-parts">
         <nuxt-link to="/postform" v-if="session">
@@ -19,12 +20,18 @@
           <p>Post</p>
         </nuxt-link>
       </div>
+    </client-only>
   </header>
 </template>
 
 <script>
 export default {
   props:["session"],
+  computed: {
+    url(){
+      return process.env.API_URL
+    }
+  }
 }
 </script>
 

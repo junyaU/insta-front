@@ -1,35 +1,37 @@
 <template>
   <div class="container">
-    <AppHeader :session="sessionData"></AppHeader>
-    <div class="profile-area">
-      <div class="upper-wrapper">
-        <div class="photo-image">
-          <img v-if="imageData" :src="imageData"  class="image-data">
-          <p v-else>画像未設定</p>
+    <client-only placeholder="Loading…">
+      <AppHeader :session="sessionData"></AppHeader>
+      <div class="profile-area">
+        <div class="upper-wrapper">
+          <div class="photo-image">
+            <img v-if="imageData" :src="imageData"  class="image-data">
+            <p v-else>画像未設定</p>
+          </div>
+          <nuxt-link :to="{name: 'image-id', params: {id: data.Id}}" v-if="data.Id == sessionData.Id">
+            <p>プロフィール画像を設定</p>
+          </nuxt-link>
         </div>
-        <nuxt-link :to="{name: 'image-id', params: {id: data.Id}}" v-if="data.Id == sessionData.Id">
-          <p>プロフィール画像を設定</p>
-        </nuxt-link>
-      </div>
-      <div class="upper-wrapper">
-        <div class="upper-text-wrapper">
-          <h2>{{data.Name}}</h2>
+        <div class="upper-wrapper">
+          <div class="upper-text-wrapper">
+            <h2>{{data.Name}}</h2>
+          </div>
+        </div>
+        <div class="upper-wrapper">
+          <div class="upper-text-wrapper">
+            <h5>いいね合計数</h5>
+            <h2>{{data.TotalFavorited}}</h2>
+          </div>
         </div>
       </div>
-      <div class="upper-wrapper">
-        <div class="upper-text-wrapper">
-          <h5>いいね合計数</h5>
-          <h2>{{data.TotalFavorited}}</h2>
+      <div class="post-area">
+        <div class="post-wrapper" v-for="(post, index) in data.Posts" :key="index">
+          <nuxt-link :to="{name: 'postdetail-id', params:{id: post.Id}}">
+            <img :src="imageHeader + post.Image" class="post-image">
+          </nuxt-link>
         </div>
       </div>
-    </div>
-    <div class="post-area">
-      <div class="post-wrapper" v-for="(post, index) in data.Posts" :key="index">
-        <nuxt-link :to="{name: 'postdetail-id', params:{id: post.Id}}">
-          <img :src="imageHeader + post.Image" class="post-image">
-        </nuxt-link>
-      </div>
-    </div>
+    </client-only>
   </div>
 </template>
 
