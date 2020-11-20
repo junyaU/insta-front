@@ -4,7 +4,7 @@
     <h1 class="title">Instagram</h1>
     <p class="register-text">アカウントを登録する</p>
     <div>
-      <form action="/api/signup" method="POST" class="login-form">
+      <form :action="url + `/api/signup`" method="POST" class="login-form">
         <InputComponent label="名前" name="Name" type="text"></InputComponent>
         <InputComponent label="メールアドレス" name="Email" type="email"></InputComponent>
         <InputComponent label="パスワード" name="Password" type="password"></InputComponent>
@@ -20,10 +20,14 @@
 <script>
 export default {
   async asyncData({app}){
-    const sessionData = await app.$axios.$get(`/api/getsession`)
-    console.log(sessionData)
+    const sessionData = await app.$axios.$get(`${process.env.API_URL}/api/getsession`)
     return {sessionData}
   },
+    computed: {
+    url(){
+      return process.env.API_URL
+    }
+  }
 }
 </script>
 
