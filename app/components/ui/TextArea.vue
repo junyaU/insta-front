@@ -1,6 +1,6 @@
 <template>
   <div>
-    <textarea :name="name" rows="8" cols="80"></textarea>
+    <textarea :name="name" rows="8" cols="80" required></textarea>
   </div>
 </template>
 
@@ -16,6 +16,7 @@ export default {
   height: 300px;
   padding: 5px;
   border-radius: 5px;
+  margin-bottom: 15px;
   border: 1px solid #ccc;
   appearance: none;
   -webkit-appearance: none;

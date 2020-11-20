@@ -1,3 +1,5 @@
+require('dotenv').config();
+const { API_KEY } = process.env
 module.exports = {
   plugins: [
     '~plugins/ui'
@@ -40,16 +42,18 @@ module.exports = {
   },
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/dotenv',
+    '@nuxtjs/proxy'
   ],
   axios: {
-    proxy: true,
+    baseURL: process.env.API_URL,
     credentials: true,
-  },
-  proxy: {
-    '/api/': 'http://server:8080',
   },
   css: [
     '@/assets/css/main.css',
   ],
+  env: {
+    API_KEY,
+  },
 
 }
