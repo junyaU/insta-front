@@ -15,7 +15,7 @@
 <script>
 export default {
   async asyncData({app}){
-    const sessionData = await app.$axios.$get(`${process.env.API_URL}/api/getsession`)
+    const sessionData = await app.$axios.$get(`/api/getsession`)
     return {sessionData}
   },
   computed: {

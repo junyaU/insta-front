@@ -27,15 +27,15 @@
 <script>
 export default {
   async asyncData({app}) {
-    const datas = await app.$axios.$get(`${process.env.API_URL}/api/getpost`);
+    const datas = await app.$axios.$get(`/api/getpost`);
     const imageHeader = 'data:image/jpg;base64,'
-    const sessionData = await app.$axios.$get(`${process.env.API_URL}/api/getsession`);
+    const sessionData = await app.$axios.$get(`/api/getsession`);
     return {datas, imageHeader, sessionData}
   },
 
   methods: {
     favorite(e){
-      const favoriteUrl = `${process.env.API_URL}/api/favorite`;
+      const favoriteUrl = `/api/favorite`;
       const postId = e.currentTarget.getAttribute("data-id");
       let favorited = e.currentTarget.getAttribute("data-favorited");
       const userId = this.sessionData.Id;
