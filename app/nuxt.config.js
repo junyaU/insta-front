@@ -43,7 +43,6 @@ module.exports = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
-    '@nuxtjs/proxy'
   ],
   axios: {
     baseURL: process.env.API_URL,
