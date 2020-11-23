@@ -10,6 +10,7 @@
               {{data.User.Name}}
             </nuxt-link>
           </h2>
+          <a class="delete-button" :data-id="data.Id" @click="deletePost" v-if="sessionData.Id == data.User.Id">削除</a>
           <div class="image-wrapper">
             <img :src="imageHeader + data.Image" class="image-photo">
           </div>
@@ -59,6 +60,17 @@ export default {
       formData.append('postid', postId);
       this.$axios.post(favoriteUrl, formData)
     },
+
+    deletePost(e){
+      const postId = e.currentTarget.getAttribute("data-id");
+      const deleteUrl = `/api/deletepost/${postId}`;
+      const alertMessage = confirm("この投稿を削除します。よろしいですか？")
+      console.log(e.currentTarget.parentNode)
+      if(alertMessage){
+        e.currentTarget.parentNode.remove()
+        this.$axios.get(deleteUrl)
+      }
+    }
 
   }
 }
@@ -115,5 +127,16 @@ export default {
 
   .favorited{
     color: #ff0000;
+  }
+
+  .delete-button{
+    position: absolute;
+    top: 1%;
+    right: 5%;
+    font-size: 20px;
+    background: #ff0000;
+    color: #ffffff;
+    padding: 5px;
+    border-radius: 5px;
   }
 </style>

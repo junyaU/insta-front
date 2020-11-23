@@ -43,10 +43,12 @@ module.exports = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
+    // '@nuxtjs/proxy'
   ],
   axios: {
     baseURL: process.env.API_URL,
     credentials: true,
+    // proxy: true,
   },
   css: [
     '@/assets/css/main.css',
@@ -54,5 +56,7 @@ module.exports = {
   env: {
     API_KEY,
   },
-
+  // proxy: {
+  //   '/api/': 'http://server:8080',
+  // }
 }
