@@ -54,11 +54,16 @@ export default {
   .image-wrapper{
     width: 100px;
     height: 100px;
+    position: relative;
+    border: 1px solid  #cccc;
+    border-radius: 50%;
   }
 
   .image-wrapper img {
     width: 100%;
     height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
   }
 
   .user-name{
@@ -66,9 +71,10 @@ export default {
   }
 
   .non-image{
-    border: 1px solid  #cccc;
-    width: 100px;
-    height: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   a{

@@ -2,7 +2,7 @@
   <div class="box">
     <span class="item-name">{{label}}</span>
     <div class="text-wrap">
-      <input :type="type" :name="name" required>
+      <input :type="type" :name="name" :minlength="minlength" required>
     </div>
   </div>
 </template>
@@ -12,7 +12,8 @@ export default {
   props:{
     label: String,
     name: String,
-    type: String
+    type: String,
+    minlength: String
   }
 }
 </script>

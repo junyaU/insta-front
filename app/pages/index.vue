@@ -7,7 +7,8 @@
       <form :action="url + `/api/signup`" method="POST" class="login-form">
         <InputComponent label="名前" name="Name" type="text"></InputComponent>
         <InputComponent label="メールアドレス" name="Email" type="email"></InputComponent>
-        <InputComponent label="パスワード" name="Password" type="password"></InputComponent>
+        <InputComponent label="パスワード" name="Password" type="password" minlength="8"></InputComponent>
+        <p class="password-text">※パスワードは8文字以上で入力してください。</p>
         <SubmitButton></SubmitButton>
         <nuxt-link to="/login">
           <p class="login-text">アカウントをお持ちの方はこちらから</p>
@@ -56,5 +57,9 @@ a{
 .register-text{
   font-size: 20px;
   font-weight: 500;
+}
+
+.password-text{
+  margin-bottom: 20px;
 }
 </style>
