@@ -6,7 +6,7 @@
         <div class="upper-wrapper">
           <div class="photo-image">
             <img v-if="imageData" :src="imageData"  class="image-data">
-            <p v-else>画像未設定</p>
+            <p  class="unimage" v-else>画像未設定</p>
           </div>
           <nuxt-link :to="{name: 'image-id', params: {id: data.Id}}" v-if="data.Id == sessionData.Id">
             <p>プロフィール画像を設定</p>
@@ -65,6 +65,8 @@ export default {
 
   .photo-image{
     border: 1px solid #000000;
+    border-radius: 50%;
+    position: relative;
     width: 100%;
     height: 100%;
   }
@@ -93,6 +95,7 @@ export default {
   .image-data{
     width: 100%;
     height: 100%;
+    border-radius: 50%;
     object-fit: cover;
   }
 
@@ -100,5 +103,12 @@ export default {
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  .unimage{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <textarea :name="name" rows="8" cols="80" required></textarea>
+    <textarea :name="name" rows="8" cols="80"></textarea>
   </div>
 </template>
 
