@@ -13,12 +13,12 @@
           </nuxt-link>
         </div>
         <div class="upper-wrapper">
-          <div class="upper-text-wrapper">
+          <div>
             <h2>{{data.Name}}</h2>
           </div>
         </div>
         <div class="upper-wrapper">
-          <div class="upper-text-wrapper">
+          <div>
             <h5>いいね合計数</h5>
             <h2>{{data.TotalFavorited}}</h2>
           </div>
@@ -77,18 +77,22 @@ export default {
   }
 
   .upper-wrapper{
+    position: relative;
     height: 200px;
     width: 200px;
   }
 
-  .upper-text-wrapper{
-    margin-top: 80px;
+  .upper-wrapper h2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .post-wrapper{
     border: 1px solid #cccc;
     margin: 0 ;
-    width: 480px;
+    width: 33.3%;
     height:400px;
   }
 
@@ -111,4 +115,19 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
+  @media screen and (min-width:320px) and (max-width:414px){
+    .upper-wrapper{
+      width: 110px;
+      height: 110px;
+    }
+
+    .post-wrapper{
+      height: 130px;
+    }
+
+    .upper-wrapper h2 {
+      font-size: 15px;
+    }
+}
 </style>

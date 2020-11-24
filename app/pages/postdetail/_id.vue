@@ -87,4 +87,19 @@ export default {
   .non-favorite-text{
     margin-top: 40px;
   }
+
+  @media screen and (min-width:320px) and (max-width:414px){
+    .user-wrapper{
+      width: 70%;
+    }
+
+    .user-name{
+      font-size: 15px;
+    }
+
+    .image-wrapper{
+      width: 80px;
+      height: 80px;
+    }
+  }
 </style>

@@ -95,7 +95,7 @@ export default {
   .image-wrapper{
     border: 1px solid #aaaa;
     height: 300px;
-    width: 500px;
+    width: 72%;
     margin: 0 auto;
   }
 
@@ -145,4 +145,30 @@ export default {
     right: 1%;
     font-weight: bold;
   }
+
+    @media screen and (min-width:320px) and (max-width:414px) {
+    .image-wrapper{
+      height: 150px;
+    }
+
+    .post-wrapper{
+      width: 60%;
+    }
+
+    .user-name{
+      font-size: 15px;
+    }
+
+    .favo-button{
+      font-size: 15px;
+    }
+
+    .favorite-user-list{
+      font-size: 10px;
+    }
+
+    .comment-wrapper p{
+      font-size: 8px;
+    }
+}
 </style>
