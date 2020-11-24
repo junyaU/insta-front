@@ -2,6 +2,7 @@
   <div class="container">
     <AppHeader :session="sessionData"></AppHeader>
     <h1>いいねしたユーザー</h1>
+    <client-only placeholder="Loading…">
     <div class="user-wrapper" v-if="favoriteUsers.Favorite[0]">
       <div v-for=" (user, index) in favoriteUsers.Favorite" :key="index">
         <nuxt-link :to="{name: 'mypage-id', params: {id: user.Id}}" class="user-content">
@@ -14,6 +15,7 @@
       </div>
     </div>
     <h2 class="non-favorite-text" v-else>いいねしたユーザーはいません</h2>
+    </client-only>
   </div>
 </template>
 

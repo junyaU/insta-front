@@ -19,6 +19,7 @@
           </div>
           <span class="favo-button" @click="favorite" :data-id="data.Id" data-favorited="0" v-if="!data.Favorite.map(user=>user.Id).includes(sessionData.Id)">♡{{data.Favonum}}</span>
           <span v-else class="favo-button favorited">❤️{{data.Favonum}}</span>
+          <a class="favorite-user-list" :href="'/postdetail/'+data.Id">いいねしたユーザー</a>
         </div>
       </div>
     </client-only>
@@ -44,34 +45,31 @@ export default {
       if(favorited == true || !this.sessionData){
         return
       }
-      e.currentTarget.dataset.favorited = 1
+      e.currentTarget.dataset.favorited = 1;
 
       //対象のPOSTを絞り込み
-      const targetPost = this.datas.filter(data => data.Id == postId)
+      const targetPost = this.datas.filter(data => data.Id == postId);
 
       //いいねしたユーザーのIDを配列に入れる
-      const favoriteIds = targetPost[0].Favorite.map(user => user.Id)
-
+      const favoriteIds = targetPost[0].Favorite.map(user => user.Id);
       //いいねを押した後、文字色や値を切り替え
-      targetPost[0].Favonum +=  1
-      e.currentTarget.style.color = "red"
-      e.currentTarget.innerHTML = `❤️${targetPost[0].Favonum}`
+      targetPost[0].Favonum +=  1;
+      e.currentTarget.style.color = "red";
+      e.currentTarget.innerHTML = `❤️${targetPost[0].Favonum}`;
 
       formData.append('postid', postId);
-      this.$axios.post(favoriteUrl, formData)
+      this.$axios.post(favoriteUrl, formData);
     },
 
     deletePost(e){
       const postId = e.currentTarget.getAttribute("data-id");
       const deleteUrl = `/api/deletepost/${postId}`;
-      const alertMessage = confirm("この投稿を削除します。よろしいですか？")
-      console.log(e.currentTarget.parentNode)
+      const alertMessage = confirm("この投稿を削除します。よろしいですか？");
       if(alertMessage){
-        e.currentTarget.parentNode.remove()
-        this.$axios.get(deleteUrl)
+        e.currentTarget.parentNode.remove();
+        this.$axios.get(deleteUrl);
       }
-    }
-
+    },
   }
 }
 </script>
@@ -110,7 +108,7 @@ export default {
     position: absolute;
     font-size: 30px;
     right: 3%;
-    bottom: 2%;
+    bottom: 8%;
     cursor: pointer;
   }
 
@@ -138,5 +136,13 @@ export default {
     color: #ffffff;
     padding: 5px;
     border-radius: 5px;
+  }
+
+  .favorite-user-list{
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 1%;
+    font-weight: bold;
   }
 </style>
