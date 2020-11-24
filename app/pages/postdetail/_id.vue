@@ -8,7 +8,7 @@
         <nuxt-link :to="{name: 'mypage-id', params: {id: user.Id}}" class="user-content">
           <div class="image-wrapper">
             <img :src="user.Image"  v-if="user.Image">
-            <p class="non-image" v-else>未設定</p>
+            <img src="~/assets/image/noimage.png" v-else>
           </div>
           <h1 class="user-name">{{user.Name}}</h1>
         </nuxt-link>
@@ -70,13 +70,6 @@ export default {
 
   .user-name{
     margin-left: 10px;
-  }
-
-  .non-image{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
   }
 
   a{

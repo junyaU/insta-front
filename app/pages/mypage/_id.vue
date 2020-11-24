@@ -6,10 +6,10 @@
         <div class="upper-wrapper">
           <div class="photo-image">
             <img v-if="imageData" :src="imageData"  class="image-data">
-            <p  class="unimage" v-else>画像未設定</p>
+            <img class="image-data" src="~/assets/image/noimage.png" v-else>
           </div>
           <nuxt-link :to="{name: 'image-id', params: {id: data.Id}}" v-if="data.Id == sessionData.Id">
-            <p>プロフィール画像を設定</p>
+            <p>画像を設定</p>
           </nuxt-link>
         </div>
         <div class="upper-wrapper">
@@ -66,7 +66,6 @@ export default {
   .photo-image{
     border: 1px solid #000000;
     border-radius: 50%;
-    position: relative;
     width: 100%;
     height: 100%;
   }
@@ -107,13 +106,6 @@ export default {
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-
-  .unimage{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
   }
 
   @media screen and (min-width:320px) and (max-width:414px){

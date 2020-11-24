@@ -170,5 +170,9 @@ export default {
     .comment-wrapper p{
       font-size: 8px;
     }
+
+    .delete-button{
+      font-size: 12px;
+    }
 }
 </style>
