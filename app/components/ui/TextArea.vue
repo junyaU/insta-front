@@ -1,6 +1,6 @@
 <template>
   <div>
-    <textarea :name="name" rows="8" cols="80"></textarea>
+    <textarea :name="name" rows="6" cols="60"></textarea>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
 <style scoped>
   textarea{
   width: 40%;
-  height: 300px;
+  height: 200px;
   padding: 5px;
   border-radius: 5px;
   margin-bottom: 15px;
