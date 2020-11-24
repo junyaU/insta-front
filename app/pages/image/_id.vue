@@ -4,7 +4,7 @@
       <AppHeader :session="sessionData"></AppHeader>
       <h1>プロフィール画像設定</h1>
       <form :action="url + `/api/upload`" method="post" enctype="multipart/form-data">
-        <InputComponent label="pngファイルを登録してください" name="Image" type="file"></InputComponent>
+        <InputPhoto></InputPhoto>
         <input type="hidden" name="userId" :value="$route.params.id">
         <SubmitButton></SubmitButton>
       </form>

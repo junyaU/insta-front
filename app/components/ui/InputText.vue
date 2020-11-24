@@ -2,7 +2,7 @@
   <div class="box">
     <span class="item-name">{{label}}</span>
     <div class="text-wrap">
-      <input :type="type" :name="name" :minlength="minlength" required>
+      <input class="input-text" :type="type" :name="name" :minlength="minlength" required>
     </div>
   </div>
 </template>
