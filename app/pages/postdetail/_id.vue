@@ -2,6 +2,7 @@
   <div class="container">
     <AppHeader :session="sessionData"></AppHeader>
     <h1>いいねしたユーザー</h1>
+    <client-only placeholder="Loading…">
     <div class="user-wrapper" v-if="favoriteUsers.Favorite[0]">
       <div v-for=" (user, index) in favoriteUsers.Favorite" :key="index">
         <nuxt-link :to="{name: 'mypage-id', params: {id: user.Id}}" class="user-content">
@@ -14,6 +15,7 @@
       </div>
     </div>
     <h2 class="non-favorite-text" v-else>いいねしたユーザーはいません</h2>
+    </client-only>
   </div>
 </template>
 
@@ -84,5 +86,20 @@ export default {
 
   .non-favorite-text{
     margin-top: 40px;
+  }
+
+  @media screen and (min-width:320px) and (max-width:414px){
+    .user-wrapper{
+      width: 70%;
+    }
+
+    .user-name{
+      font-size: 15px;
+    }
+
+    .image-wrapper{
+      width: 80px;
+      height: 80px;
+    }
   }
 </style>

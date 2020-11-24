@@ -22,4 +22,11 @@ export default {
   -webkit-appearance: none;
   -moz-appearance: none;
 }
+
+@media screen and (min-width:320px) and (max-width:414px){
+  textarea{
+    width: 60%;
+    height: 200px;
+  }
+}
 </style>

@@ -31,4 +31,9 @@ input{
   margin-bottom: 20px;
 }
 
+@media screen and (min-width:320px) and (max-width:414px){
+  input{
+    width: 80%;
+  }
+}
 </style>
