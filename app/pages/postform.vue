@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <client-only placeholder="Loading…">
       <AppHeader :session="sessionData"></AppHeader>
+    <client-only placeholder="Loading…">
       <h1>Post Form</h1>
-      <form action="/api/post"  enctype="multipart/form-data" method="post">
+      <form :action="url + `/api/post`"  enctype="multipart/form-data" method="post">
         <InputPhoto></InputPhoto>
         <TextArea name="Comment"></TextArea>
         <SubmitButton></SubmitButton>

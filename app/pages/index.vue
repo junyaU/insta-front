@@ -4,16 +4,15 @@
     <h1 class="title">Instagram</h1>
     <p class="register-text">アカウントを登録する</p>
     <div>
-      <form :action="url + `/api/signup`" method="POST" class="login-form">
-        <InputComponent label="名前" name="Name" type="text"></InputComponent>
-        <InputComponent label="メールアドレス" name="Email" type="email"></InputComponent>
-        <InputComponent label="パスワード" name="Password" type="password" minlength="8"></InputComponent>
-        <p class="password-text">※パスワードは8文字以上で入力してください。</p>
-        <SubmitButton></SubmitButton>
-        <nuxt-link to="/login">
-          <p class="login-text">アカウントをお持ちの方はこちらから</p>
-        </nuxt-link>
-      </form>
+      <InputComponent label="名前" name="Name" type="text" classname="name-input"></InputComponent>
+      <InputComponent label="メールアドレス" name="Email" type="email" classname="email-input"></InputComponent>
+      <InputComponent label="パスワード" name="Password" type="password" classname="password-input"  minlength="8"></InputComponent>
+      <InputComponent label="パスワード確認" name="Repassword" type="password" classname="repassword-input" minlength="8"></InputComponent>
+      <p class="password-text">※パスワードは8文字以上で入力してください。</p>
+      <SubmitButton @click.native="signUp"></SubmitButton>
+      <nuxt-link to="/login">
+        <p class="login-text">アカウントをお持ちの方はこちらから</p>
+      </nuxt-link>
     </div>
   </section>
 </template>
@@ -24,11 +23,58 @@ export default {
     const sessionData = await app.$axios.$get(`/api/getsession`)
     return {sessionData}
   },
-    computed: {
-    url(){
-      return process.env.API_URL
+
+  methods:{
+    async signUp(){
+      const name = document.querySelector(".name-input");
+      const email = document.querySelector(".email-input");
+      const password = document.querySelector(".password-input");
+      const repassword = document.querySelector(".repassword-input");
+      const apiUrl = "/api/signup"
+      const formData = new FormData();
+      const emailCheck = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
+
+      if(!name.value){
+        alert("名前を１文字以上入力してください");
+        return;
+      }
+
+      if(!email.value.match(emailCheck)){
+        alert("有効なメールアドレスを入力してください");
+        return;
+      }
+
+      if(password.value.length < 8){
+        alert("パスワードは８文字以上で入力してください");
+        password.value = "";
+        repassword.value = "";
+        return;
+      }
+
+      if(password.value != repassword.value){
+        alert("パスワードが一致していません");
+        password.value = "";
+        repassword.value = "";
+        return;
+      }
+
+      formData.append("Name", name.value);
+      formData.append("Email", email.value);
+      formData.append("Password", password.value);
+      formData.append("Repassword", repassword.value);
+
+      await this.$axios.post(apiUrl, formData).then(res =>{
+        if(res.data.status == "success"){
+          alert("ログインに成功しました")
+          this.$router.push("/posthome");
+        }else{
+          alert("そのメールアドレスは既に使われています");
+        }
+      })
+
     }
   }
+
 }
 </script>
 
