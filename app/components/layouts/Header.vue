@@ -10,7 +10,7 @@
         <nuxt-link to="/" v-if="!session">
           <p>login</p>
         </nuxt-link>
-        <a :href="url + `/api/logout`" v-else>Logout</a>
+        <p @click="logout" v-else>Logout</p>
       </div>
       <div class="header-parts">
         <nuxt-link to="/postform" v-if="session">
@@ -27,9 +27,13 @@
 <script>
 export default {
   props:["session"],
-  computed: {
-    url(){
-      return process.env.API_URL
+
+  methods:{
+    async logout(){
+      const apiUrl = "/api/logout";
+      await this.$axios.get(apiUrl).then(()=>{
+        this.$router.push("/");
+      })
     }
   }
 }

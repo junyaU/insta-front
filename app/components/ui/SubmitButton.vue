@@ -1,5 +1,5 @@
 <template>
-  <input type="submit" value="送信">
+  <p class="submit-button">送信</p>
 </template>
 
 <script>
@@ -9,7 +9,7 @@ export default {
 </script>
 
 <style scoped>
-input[type='submit']{
+.submit-button{
   border: none;
   display: block;
   width: 40%;
