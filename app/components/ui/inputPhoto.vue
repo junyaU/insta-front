@@ -6,13 +6,13 @@
       </label>
       <img src="~/assets/image/delete_img_button.png" class="delete-image" @click="deleteImage">
     </div>
-    <input id="image-input" type="file" name="Image" @change="showPreview" required>
-    <p>pngファイルを選択してください。</p>
+    <input id="image-input" type="file" @change="showPreview" :class="classname">
   </div>
 </template>
 
 <script>
 export default {
+  props: ["classname"],
   methods: {
     showPreview(e){
       const file = e.target.files[0];

@@ -1,12 +1,12 @@
 <template>
   <div>
-    <textarea :name="name" rows="6" cols="60"></textarea>
+    <textarea :class="classname" rows="6" cols="60"></textarea>
   </div>
 </template>
 
 <script>
 export default {
-  props:['name']
+  props:['name','classname']
 }
 </script>
 

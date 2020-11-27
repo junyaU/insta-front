@@ -19,7 +19,9 @@
           </div>
           <span class="favo-button" @click="favorite" :data-id="data.Id" data-favorited="0" v-if="!data.Favorite.map(user=>user.Id).includes(sessionData.Id)">♡{{data.Favonum}}</span>
           <span v-else class="favo-button favorited">❤️{{data.Favonum}}</span>
-          <a class="favorite-user-list" :href="'/postdetail/'+data.Id">いいねしたユーザー</a>
+          <nuxt-link :to="{name: 'postdetail-id', params: {id: data.Id}}">
+            <p class="favorite-user-list">いいねしたユーザー</p>
+          </nuxt-link>
         </div>
       </div>
     </client-only>
