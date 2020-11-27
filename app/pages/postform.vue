@@ -43,10 +43,9 @@ async asyncData({app}){
       formData.append("Comment", textDom.value);
       formData.append("Image", image);
 
-      await this.$axios.post(apiUrl, formData).then(() => {
-        alert("正常に投稿されました");
-        this.$router.push("/posthome");
-      })
+      const post = await this.$axios.post(apiUrl, formData);
+      alert("正常に投稿されました");
+      this.$router.push("/posthome");
     }
   }
 

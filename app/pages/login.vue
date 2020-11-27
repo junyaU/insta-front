@@ -38,16 +38,17 @@ export default {
       formData.append("Email", email.value);
       formData.append("Password", password.value);
 
-      await this.$axios.post(apiUrl, formData).then(res =>{
-        if(res.data.status == "success"){
-          alert("ログインに成功しました")
-          this.$router.push("/posthome");
-        }else{
-          alert("ログインに失敗しました")
-          email.value = "";
-          password.value = "";
-        }
-      })
+      const login = await this.$axios.post(apiUrl, formData)
+      if(login.data.status == "success"){
+        alert("ログインに成功しました");
+        const sessiondata = await this.$axios.get("/api/getsession");
+        this.$store.commit('session/add', sessiondata.data);
+        this.$router.push("/posthome");
+      }else{
+        alert("ログインに失敗しました")
+        email.value = "";
+        password.value = "";
+      }
     }
   }
 }

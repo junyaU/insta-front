@@ -63,16 +63,20 @@ export default {
       formData.append("Password", password.value);
       formData.append("Repassword", repassword.value);
 
-      await this.$axios.post(apiUrl, formData).then(res =>{
-        if(res.data.status == "success"){
-          alert("ログインに成功しました")
-          this.$router.push("/posthome");
-        }else{
-          alert("そのメールアドレスは既に使われています");
-        }
-      })
+      const signup = await this.$axios.post(apiUrl, formData);
+      if(signup.data.status == "success"){
+        alert("ログインに成功しました");
+        this.$router.push("/posthome");
+      }else{
+        alert("そのメールアドレスは既に使われています");
+      }
+
 
     }
+  },
+
+  mounted(){
+    console.log(this.$store.state.session.data)
   }
 
 }

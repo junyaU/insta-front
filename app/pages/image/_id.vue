@@ -38,10 +38,9 @@ export default {
       formData.append("userId", userId);
       formData.append("Image", image);
 
-      await this.$axios.post(apiUrl, formData).then(()=>{
-        alert("画像の設定に成功しました");
-        this.$router.push("/posthome");
-      });
+      const upload =await this.$axios.post(apiUrl, formData);
+      alert("画像の設定に成功しました");
+      this.$router.push("/posthome");
     }
   }
 }
