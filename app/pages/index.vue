@@ -4,10 +4,10 @@
     <h1 class="title">Instagram</h1>
     <p class="register-text">アカウントを登録する</p>
     <div>
-      <InputComponent label="名前" name="Name" type="text" classname="name-input"></InputComponent>
-      <InputComponent label="メールアドレス" name="Email" type="email" classname="email-input"></InputComponent>
-      <InputComponent label="パスワード" name="Password" type="password" classname="password-input"  minlength="8"></InputComponent>
-      <InputComponent label="パスワード確認" name="Repassword" type="password" classname="repassword-input" minlength="8"></InputComponent>
+      <InputComponent label="名前" type="text" classname="name-input"></InputComponent>
+      <InputComponent label="メールアドレス" type="email" classname="email-input"></InputComponent>
+      <InputComponent label="パスワード" type="password" classname="password-input"></InputComponent>
+      <InputComponent label="パスワード確認" type="password" classname="repassword-input"></InputComponent>
       <p class="password-text">※パスワードは8文字以上で入力してください。</p>
       <SubmitButton @click.native="signUp"></SubmitButton>
       <nuxt-link to="/login">

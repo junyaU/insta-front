@@ -3,8 +3,8 @@
     <client-only placeholder="Loading…">
       <AppHeader :session="sessionData"></AppHeader>
       <h1 class="login-title">Login</h1>
-      <InputComponent label="メールアドレス" name="Email" type="email" classname="email-input"></InputComponent>
-      <InputComponent label="パスワード" name="Password" type="password" classname="password-input"></InputComponent>
+      <InputComponent label="メールアドレス" type="email" classname="email-input"></InputComponent>
+      <InputComponent label="パスワード" type="password" classname="password-input"></InputComponent>
       <SubmitButton @click.native="login"></SubmitButton>
     </client-only>
   </div>
