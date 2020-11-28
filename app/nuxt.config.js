@@ -2,7 +2,8 @@ require('dotenv').config();
 const { API_KEY } = process.env
 module.exports = {
   plugins: [
-    '~plugins/ui'
+    '~plugins/ui',
+    { src: '~plugins/localStorage', ssr: false },
   ],
   /*
   ** Headers of the page

@@ -1,14 +1,14 @@
 <template>
   <div class="container">
     <client-only placeholder="Loading…">
-      <AppHeader :session="sessionData"></AppHeader>
+      <AppHeader></AppHeader>
       <div class="profile-area">
         <div class="upper-wrapper">
           <div class="photo-image">
             <img v-if="imageData" :src="imageData"  class="image-data">
             <img class="image-data" src="~/assets/image/noimage.png" v-else>
           </div>
-          <nuxt-link :to="{name: 'image-id', params: {id: data.Id}}" v-if="data.Id == sessionData.Id">
+          <nuxt-link :to="{name: 'image-id', params: {id: data.Id}}" v-if="data.Id == sessionUserId">
             <p>画像を設定</p>
           </nuxt-link>
         </div>
@@ -38,19 +38,25 @@
 <script>
 export default {
   async asyncData({app, params}){
-    const paramId = params.id
-    const data = await app.$axios.$get(`/api/user/${paramId}`)
-    const profileImageData = await app.$axios.$get(`/api/getprofileimage/${paramId}`)
-    const sessionData = await app.$axios.$get(`/api/getsession`)
-    let imageData = ""
-    const imageHeader = 'data:image/jpg;base64,'
+    const paramId = params.id;
+    const data = await app.$axios.$get(`/api/user/${paramId}`);
+    const profileImageData = await app.$axios.$get(`/api/getprofileimage/${paramId}`);
+    let imageData = "";
+    const imageHeader = 'data:image/jpg;base64,';
 
     //画像データがあれば読み込む
     if(profileImageData.image){
       imageData = imageHeader + profileImageData.image;
     }
-    return {data, imageData, sessionData, imageHeader}
-  }
+    return {data, imageData, imageHeader}
+  },
+  computed:{
+    sessionUserId(){
+      const sessionExist = this.$store.state.session.data[0];
+      const data = sessionExist ? this.$store.state.session.data[0].Id : 0;
+      return data;
+    }
+  },
 }
 </script>
 
