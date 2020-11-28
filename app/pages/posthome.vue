@@ -18,7 +18,7 @@
             <p>{{data.Comment}}</p>
           </div>
           <span class="favo-button" @click="favorite" :data-id="data.Id" data-favorited="0" v-if="!data.Favorite.map(user=>user.Id).includes(sessionUserId)">♡{{data.Favonum}}</span>
-          <span v-else class="favo-button favorited">❤️{{data.Favonum}}</span>
+          <span class="favo-button favorited" @click="favorite" :data-id="data.Id" data-favorited="1" v-else>❤️{{data.Favonum}}</span>
           <nuxt-link :to="{name: 'postdetail-id', params: {id: data.Id}}">
             <p class="favorite-user-list">いいねしたユーザー</p>
           </nuxt-link>
@@ -45,28 +45,38 @@ export default {
 
   methods: {
     favorite(e){
-      const favoriteUrl = `/api/favorite`;
+      let apiUrl;
       const postId = e.currentTarget.getAttribute("data-id");
       let favorited = e.currentTarget.getAttribute("data-favorited");
       const userId = this.sessionUserId
       const formData = new FormData();
-      if(favorited == true || !userId){
-        return
-      }
-      e.currentTarget.dataset.favorited = 1;
-
-      //対象のPOSTを絞り込み
       const targetPost = this.datas.filter(data => data.Id == postId);
 
-      //いいねしたユーザーのIDを配列に入れる
-      const favoriteIds = targetPost[0].Favorite.map(user => user.Id);
-      //いいねを押した後、文字色や値を切り替え
-      targetPost[0].Favonum +=  1;
-      e.currentTarget.style.color = "red";
-      e.currentTarget.innerHTML = `❤️${targetPost[0].Favonum}`;
+      if(!userId){
+        return;
+      }
 
-      formData.append('postid', postId);
-      this.$axios.post(favoriteUrl, formData);
+      if(favorited == true){
+        //いいねを外す
+        apiUrl = "/api/unfavorite";
+
+        e.currentTarget.dataset.favorited = 0;
+        targetPost[0].Favonum -= 1;
+        e.currentTarget.style.color = "black";
+        e.currentTarget.innerHTML = `♡${targetPost[0].Favonum}`;
+      }else{
+        //いいねをつける
+        apiUrl = "/api/favorite";
+
+        e.currentTarget.dataset.favorited = 1;
+        targetPost[0].Favonum +=  1;
+        e.currentTarget.style.color = "red";
+        e.currentTarget.innerHTML = `❤️${targetPost[0].Favonum}`;
+      }
+
+        formData.append("postid", postId);
+        formData.append("userid", userId);
+        this.$axios.post(apiUrl, formData);
     },
 
     deletePost(e){
