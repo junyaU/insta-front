@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <client-only placeholder="Loading…">
-      <AppHeader :session="sessionData"></AppHeader>
+      <AppHeader></AppHeader>
       <h1>Post List</h1>
       <div class="post-wrapper">
         <div class="post-content" v-for="(data, index) in datas" :key="index">
@@ -10,14 +10,14 @@
               {{data.User.Name}}
             </nuxt-link>
           </h2>
-          <a class="delete-button" :data-id="data.Id" @click="deletePost" v-if="sessionData.Id == data.User.Id">削除</a>
+          <a class="delete-button" :data-id="data.Id" @click="deletePost" v-if="sessionUserId == data.User.Id">削除</a>
           <div class="image-wrapper">
             <img :src="imageHeader + data.Image" class="image-photo">
           </div>
           <div class="comment-wrapper">
             <p>{{data.Comment}}</p>
           </div>
-          <span class="favo-button" @click="favorite" :data-id="data.Id" data-favorited="0" v-if="!data.Favorite.map(user=>user.Id).includes(sessionData.Id)">♡{{data.Favonum}}</span>
+          <span class="favo-button" @click="favorite" :data-id="data.Id" data-favorited="0" v-if="!data.Favorite.map(user=>user.Id).includes(sessionUserId)">♡{{data.Favonum}}</span>
           <span v-else class="favo-button favorited">❤️{{data.Favonum}}</span>
           <nuxt-link :to="{name: 'postdetail-id', params: {id: data.Id}}">
             <p class="favorite-user-list">いいねしたユーザー</p>
@@ -33,8 +33,14 @@ export default {
   async asyncData({app}) {
     const datas = await app.$axios.$get(`/api/getpost`);
     const imageHeader = 'data:image/jpg;base64,'
-    const sessionData = await app.$axios.$get(`/api/getsession`);
-    return {datas, imageHeader, sessionData}
+    return {datas, imageHeader}
+  },
+  computed:{
+    sessionUserId(){
+      const sessionExist = this.$store.state.session.data[0];
+      const data = sessionExist ? this.$store.state.session.data[0].Id : 0;
+      return data;
+    }
   },
 
   methods: {
@@ -42,9 +48,9 @@ export default {
       const favoriteUrl = `/api/favorite`;
       const postId = e.currentTarget.getAttribute("data-id");
       let favorited = e.currentTarget.getAttribute("data-favorited");
-      const userId = this.sessionData.Id;
+      const userId = this.sessionUserId
       const formData = new FormData();
-      if(favorited == true || !this.sessionData){
+      if(favorited == true || !userId){
         return
       }
       e.currentTarget.dataset.favorited = 1;

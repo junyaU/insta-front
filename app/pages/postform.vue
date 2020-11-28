@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-      <AppHeader :session="sessionData"></AppHeader>
+      <AppHeader></AppHeader>
     <client-only placeholder="Loading…">
       <h1>Post Form</h1>
       <InputPhoto classname="image-input"></InputPhoto>
@@ -12,15 +12,7 @@
 
 <script>
 export default {
-async asyncData({app}){
-    const sessionData = await app.$axios.$get(`/api/getsession`);
-    return {sessionData}
-  },
-    computed: {
-    url(){
-      return process.env.API_URL
-    }
-  },
+  middleware: 'logincheck',
   methods: {
     async post(){
       const apiUrl = "/api/post";
@@ -47,7 +39,6 @@ async asyncData({app}){
       alert("正常に投稿されました");
       this.$router.push("/posthome");
     }
-  }
-
+  },
 }
 </script>
