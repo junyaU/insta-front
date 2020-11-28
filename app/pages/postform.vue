@@ -13,14 +13,28 @@
 <script>
 export default {
   middleware: 'logincheck',
+  computed:{
+  sessionUserId(){
+    const sessionExist = this.$store.state.session.data[0];
+    const data = sessionExist ? this.$store.state.session.data[0].Id : 0;
+    return data;
+    }
+  },
+
   methods: {
     async post(){
       const apiUrl = "/api/post";
+      const userId = this.sessionUserId;
       const textDom = document.querySelector(".text-input");
       const imageDom = document.querySelector(".image-input");
       const image = imageDom.files[0];
       const formData = new FormData();
       const imageCheck = ".png|.jpg|.jpeg|.gif";
+
+      if(!userId){
+        alert("ログインされていません");
+        return
+      }
 
       if(!image){
         alert("画像が選択されていません");
@@ -32,13 +46,14 @@ export default {
         return
       }
 
+      formData.append("UserId", userId);
       formData.append("Comment", textDom.value);
       formData.append("Image", image);
 
-      const post = await this.$axios.post(apiUrl, formData);
+      await this.$axios.post(apiUrl, formData);
       alert("正常に投稿されました");
       this.$router.push("/posthome");
     }
-  },
+  }
 }
 </script>
