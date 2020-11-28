@@ -39,7 +39,7 @@ export default {
       formData.append("Password", password.value);
 
       const login = await this.$axios.post(apiUrl, formData);
-      console.log(login.data)
+
       if(login.data.status == "success"){
         alert("ログインに成功しました");
         const sessiondata = await this.$axios.get(getSessionUrl);
