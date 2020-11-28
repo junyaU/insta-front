@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <client-only placeholder="Loading…">
-      <AppHeader :session="sessionData"></AppHeader>
+      <AppHeader></AppHeader>
       <h1>プロフィール画像設定</h1>
       <InputPhoto classname="image-input"></InputPhoto>
       <input class="userId" type="hidden" :value="$route.params.id">
@@ -12,10 +12,6 @@
 
 <script>
 export default {
-  async asyncData({app}){
-    const sessionData = await app.$axios.$get(`/api/getsession`)
-    return {sessionData}
-  },
   methods:{
     async upload(){
       const apiUrl = "/api/upload";
@@ -38,10 +34,9 @@ export default {
       formData.append("userId", userId);
       formData.append("Image", image);
 
-      await this.$axios.post(apiUrl, formData).then(()=>{
-        alert("画像の設定に成功しました");
-        this.$router.push("/posthome");
-      });
+      const upload =await this.$axios.post(apiUrl, formData);
+      alert("画像の設定に成功しました");
+      this.$router.push("/posthome");
     }
   }
 }

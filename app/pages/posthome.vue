@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <client-only placeholder="Loading…">
-      <AppHeader :session="sessionData"></AppHeader>
+      <AppHeader></AppHeader>
       <h1>Post List</h1>
       <div class="post-wrapper">
         <div class="post-content" v-for="(data, index) in datas" :key="index">
@@ -10,15 +10,15 @@
               {{data.User.Name}}
             </nuxt-link>
           </h2>
-          <a class="delete-button" :data-id="data.Id" @click="deletePost" v-if="sessionData.Id == data.User.Id">削除</a>
+          <a class="delete-button" :data-id="data.Id" @click="deletePost" v-if="sessionUserId == data.User.Id">削除</a>
           <div class="image-wrapper">
             <img :src="imageHeader + data.Image" class="image-photo">
           </div>
           <div class="comment-wrapper">
             <p>{{data.Comment}}</p>
           </div>
-          <span class="favo-button" @click="favorite" :data-id="data.Id" data-favorited="0" v-if="!data.Favorite.map(user=>user.Id).includes(sessionData.Id)">♡{{data.Favonum}}</span>
-          <span v-else class="favo-button favorited">❤️{{data.Favonum}}</span>
+          <span class="favo-button" @click="favorite" :data-id="data.Id" data-favorited="0" v-if="!data.Favorite.map(user=>user.Id).includes(sessionUserId)">♡{{data.Favonum}}</span>
+          <span class="favo-button favorited" @click="favorite" :data-id="data.Id" data-favorited="1" v-else>❤️{{data.Favonum}}</span>
           <nuxt-link :to="{name: 'postdetail-id', params: {id: data.Id}}">
             <p class="favorite-user-list">いいねしたユーザー</p>
           </nuxt-link>
@@ -33,34 +33,50 @@ export default {
   async asyncData({app}) {
     const datas = await app.$axios.$get(`/api/getpost`);
     const imageHeader = 'data:image/jpg;base64,'
-    const sessionData = await app.$axios.$get(`/api/getsession`);
-    return {datas, imageHeader, sessionData}
+    return {datas, imageHeader}
+  },
+  computed:{
+    sessionUserId(){
+      const sessionExist = this.$store.state.session.data[0];
+      const data = sessionExist ? this.$store.state.session.data[0].Id : 0;
+      return data;
+    }
   },
 
   methods: {
     favorite(e){
-      const favoriteUrl = `/api/favorite`;
+      let apiUrl;
       const postId = e.currentTarget.getAttribute("data-id");
       let favorited = e.currentTarget.getAttribute("data-favorited");
-      const userId = this.sessionData.Id;
+      const userId = this.sessionUserId
       const formData = new FormData();
-      if(favorited == true || !this.sessionData){
-        return
-      }
-      e.currentTarget.dataset.favorited = 1;
-
-      //対象のPOSTを絞り込み
       const targetPost = this.datas.filter(data => data.Id == postId);
 
-      //いいねしたユーザーのIDを配列に入れる
-      const favoriteIds = targetPost[0].Favorite.map(user => user.Id);
-      //いいねを押した後、文字色や値を切り替え
-      targetPost[0].Favonum +=  1;
-      e.currentTarget.style.color = "red";
-      e.currentTarget.innerHTML = `❤️${targetPost[0].Favonum}`;
+      if(!userId){
+        return;
+      }
 
-      formData.append('postid', postId);
-      this.$axios.post(favoriteUrl, formData);
+      if(favorited == true){
+        //いいねを外す
+        apiUrl = "/api/unfavorite";
+
+        e.currentTarget.dataset.favorited = 0;
+        targetPost[0].Favonum -= 1;
+        e.currentTarget.style.color = "black";
+        e.currentTarget.innerHTML = `♡${targetPost[0].Favonum}`;
+      }else{
+        //いいねをつける
+        apiUrl = "/api/favorite";
+
+        e.currentTarget.dataset.favorited = 1;
+        targetPost[0].Favonum +=  1;
+        e.currentTarget.style.color = "red";
+        e.currentTarget.innerHTML = `❤️${targetPost[0].Favonum}`;
+      }
+
+        formData.append("postid", postId);
+        formData.append("userid", userId);
+        this.$axios.post(apiUrl, formData);
     },
 
     deletePost(e){

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <AppHeader :session="sessionData"></AppHeader>
+    <AppHeader></AppHeader>
     <h1>いいねしたユーザー</h1>
     <client-only placeholder="Loading…">
     <div class="user-wrapper" v-if="favoriteUsers.Favorite[0]">
@@ -22,7 +22,6 @@
 <script>
 export default {
   async asyncData({app, params}){
-    const sessionData = await app.$axios.$get(`/api/getsession`)
     const favoriteUsers = await app.$axios.$get(`/api/getfavoriteuser/`+ params.id)
     const imageHeader = 'data:image/jpg;base64,'
 
@@ -34,7 +33,7 @@ export default {
       }
     }
 
-    return {sessionData, favoriteUsers}
+    return {favoriteUsers}
   },
 }
 </script>

@@ -7,16 +7,13 @@
         </nuxt-link>
       </div>
       <div class="header-parts">
-        <nuxt-link to="/" v-if="!session">
+        <nuxt-link to="/" v-if="!this.$store.state.session.data[0]">
           <p>login</p>
         </nuxt-link>
         <p @click="logout" v-else>Logout</p>
       </div>
       <div class="header-parts">
-        <nuxt-link to="/postform" v-if="session">
-          <p>Post</p>
-        </nuxt-link>
-        <nuxt-link to="/" v-else>
+        <nuxt-link to="/postform">
           <p>Post</p>
         </nuxt-link>
       </div>
@@ -26,15 +23,22 @@
 
 <script>
 export default {
-  props:["session"],
-
   methods:{
     async logout(){
       const apiUrl = "/api/logout";
-      await this.$axios.get(apiUrl).then(()=>{
-        this.$router.push("/");
-      })
+      const logout = await this.$axios.get(apiUrl);
+      this.$store.commit("session/delete");
+      this.$router.push("/");
+    },
+    async session(){
+      const sessionData = await this.$axios.get("/api/getsession");
+      if(!sessionData.data){
+        this.$store.commit("session/delete");
+      }
     }
+  },
+  created(){
+    this.session()
   }
 }
 </script>
