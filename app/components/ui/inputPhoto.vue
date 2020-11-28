@@ -12,7 +12,9 @@
 
 <script>
 export default {
-  props: ["classname"],
+  props: {
+    classname: String
+  },
   methods: {
     showPreview(e){
       const file = e.target.files[0];

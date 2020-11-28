@@ -74,9 +74,9 @@ export default {
         e.currentTarget.innerHTML = `❤️${targetPost[0].Favonum}`;
       }
 
-        formData.append("postid", postId);
-        formData.append("userid", userId);
-        this.$axios.post(apiUrl, formData);
+      formData.append("postid", postId);
+      formData.append("userid", userId);
+      this.$axios.post(apiUrl, formData);
     },
 
     deletePost(e){

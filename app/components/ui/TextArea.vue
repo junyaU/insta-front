@@ -6,7 +6,10 @@
 
 <script>
 export default {
-  props:['name','classname']
+  props:{
+    name: String,
+    classname: String
+  }
 }
 </script>
 
