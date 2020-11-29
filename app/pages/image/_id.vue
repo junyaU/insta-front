@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <client-only placeholder="Loading…">
+    <client-only>
       <AppHeader></AppHeader>
       <h1>プロフィール画像設定</h1>
       <InputPhoto classname="image-input"></InputPhoto>
@@ -35,7 +35,6 @@ export default {
       formData.append("Image", image);
 
       const upload =await this.$axios.post(apiUrl, formData);
-      alert("画像の設定に成功しました");
       this.$router.push("/posthome");
     }
   }

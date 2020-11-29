@@ -1,6 +1,6 @@
 <template>
   <header>
-    <client-only placeholder="Loading…">
+    <client-only>
       <div class="header-parts">
         <nuxt-link to="/posthome">
           <p>Home</p>

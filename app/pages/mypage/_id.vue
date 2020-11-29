@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <client-only placeholder="Loading…">
+    <client-only>
       <AppHeader></AppHeader>
       <div class="profile-area">
         <div class="upper-wrapper">
@@ -39,8 +39,10 @@
 export default {
   async asyncData({app, params}){
     const paramId = params.id;
-    const data = await app.$axios.$get(`/api/user/${paramId}`);
-    const profileImageData = await app.$axios.$get(`/api/getprofileimage/${paramId}`);
+    const [data, profileImageData] = await Promise.all([
+      app.$axios.$get(`/api/user/${paramId}`),
+      app.$axios.$get(`/api/getprofileimage/${paramId}`),
+    ])
     let imageData = "";
     const imageHeader = 'data:image/jpg;base64,';
 
@@ -50,6 +52,7 @@ export default {
     }
     return {data, imageData, imageHeader}
   },
+
   computed:{
     sessionUserId(){
       const sessionExist = this.$store.state.session.data[0];
