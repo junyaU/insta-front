@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <client-only placeholder="Loading…">
+    <client-only>
       <AppHeader></AppHeader>
       <h1>Post List</h1>
       <div class="post-wrapper">
@@ -12,7 +12,7 @@
           </h2>
           <a class="delete-button" :data-id="data.Id" @click="deletePost" v-if="sessionUserId == data.User.Id">削除</a>
           <div class="image-wrapper">
-            <img :src="imageHeader + data.Image" class="image-photo">
+            <img :src="'data:image/jpg;base64,' +  data.Image" class="image-photo">
           </div>
           <div class="comment-wrapper">
             <p>{{data.Comment}}</p>
@@ -32,8 +32,7 @@
 export default {
   async asyncData({app}) {
     const datas = await app.$axios.$get(`/api/getpost`);
-    const imageHeader = 'data:image/jpg;base64,'
-    return {datas, imageHeader}
+    return {datas}
   },
   computed:{
     sessionUserId(){
@@ -128,6 +127,7 @@ export default {
     right: 3%;
     bottom: 8%;
     cursor: pointer;
+    user-select: none;
   }
 
   a{

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
       <AppHeader></AppHeader>
-    <client-only placeholder="Loading…">
+    <client-only>
       <h1>Post Form</h1>
       <InputPhoto classname="image-input"></InputPhoto>
       <TextArea classname="text-input"></TextArea>
@@ -51,7 +51,6 @@ export default {
       formData.append("Image", image);
 
       await this.$axios.post(apiUrl, formData);
-      alert("正常に投稿されました");
       this.$router.push("/posthome");
     }
   }

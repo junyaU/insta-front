@@ -22,7 +22,7 @@ module.exports = {
   /*
   ** Customize the progress bar color
   */
-  loading: { color: '#3B8070' },
+  loading: false,
   /*
   ** Build configuration
   */
@@ -44,8 +44,15 @@ module.exports = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
-    // '@nuxtjs/proxy'
+    // '@nuxtjs/proxy',
+    '@nuxtjs/pwa'
   ],
+  manifest: {
+    name: 'junyagram',
+    lang: 'ja',
+    short_name: 'junya',
+    title: 'junyagram'
+  },
   axios: {
     baseURL: process.env.API_URL,
     credentials: true,
