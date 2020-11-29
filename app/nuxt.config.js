@@ -4,6 +4,7 @@ module.exports = {
   plugins: [
     '~plugins/ui',
     { src: '~plugins/localStorage', ssr: false },
+    { src: "~plugins/lazyload.js" ,  loading:'~/asset/image/noimage.png'}
   ],
   /*
   ** Headers of the page

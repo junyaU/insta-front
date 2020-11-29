@@ -12,7 +12,7 @@
           </h2>
           <a class="delete-button" :data-id="data.Id" @click="deletePost" v-if="sessionUserId == data.User.Id">削除</a>
           <div class="image-wrapper">
-            <img :src="'data:image/jpg;base64,' +  data.Image" class="image-photo">
+            <img v-lazy="'data:image/jpg;base64,' +  data.Image" class="image-photo">
           </div>
           <div class="comment-wrapper">
             <p>{{data.Comment}}</p>

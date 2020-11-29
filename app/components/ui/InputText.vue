@@ -27,6 +27,7 @@ input{
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+  background-color: #fafafa;
   margin-bottom: 20px;
 }
 
