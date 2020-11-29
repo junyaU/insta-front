@@ -9,18 +9,9 @@
       <div class="edit-wrapper">
         <div class="profile-edit">
           <h1>プロフィール編集</h1>
-          <div class="image-wrapper">
-            <div>
-              <p>現在の画像</p>
-              <img :src="imageData" class="current-image">
-            </div>
-            <div>
-            <InputPhoto classname="input-image" labelclass="preview-wrapper"></InputPhoto>
-            </div>
-          </div>
           <InputComponent type="text" label="名前" classname="input-name"></InputComponent>
           <InputComponent type="email" label="メールアドレス" classname="input-email"></InputComponent>
-          <SubmitButton></SubmitButton>
+          <SubmitButton @click.native="updateProfile"></SubmitButton>
         </div>
         <div class="password-edit">
           <h1>パスワード変更</h1>
@@ -42,6 +33,13 @@
 <script>
 export default {
   middleware: 'logincheck',
+  computed:{
+    sessionUserId(){
+      const sessionExist = this.$store.state.session.data[0];
+      const data = sessionExist ? this.$store.state.session.data[0].Id : 0;
+      return data;
+    }
+  },
   async asyncData({app, params}) {
     let imageData = "";
     const imageHeader = 'data:image/jpg;base64,';
@@ -99,6 +97,33 @@ export default {
         password.style.display = "none";
         logout.style.display = "block";
       }
+    },
+
+    async updateProfile(){
+      const apiUrl = "/api/editprofile";
+      const nameDom = document.querySelector(".input-name");
+      const emailDom = document.querySelector(".input-email");
+      const userId = this.sessionUserId;
+      const emailCheck = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
+      const formData = new FormData();
+
+      if(!userId){
+        alert("ログインされていません");
+        return;
+      }
+
+      if(!nameDom.value ||!emailDom.value.match(emailCheck)){
+        alert("不正な値が入力されています");
+        return;
+      }
+
+      formData.append("UserId", userId);
+      formData.append("Name", nameDom.value);
+      formData.append("Email", emailDom.value);
+
+      await this.$axios.post(apiUrl, formData);
+      alert("プロフィールが更新されました");
+      this.$router.push("/posthome");
     },
 
     async logout(){
@@ -165,11 +190,5 @@ export default {
     margin-bottom: 20px;
   }
 
-  .current-image{
-    border: 1px solid #000;
-    border-radius: 50%;
-    width: 18%;
-    margin-bottom: 10px;
-  }
 
 </style>
