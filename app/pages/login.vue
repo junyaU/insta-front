@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <client-only placeholder="Loading…">
+    <client-only placeholder="ok">
       <AppHeader></AppHeader>
       <h1 class="login-title">Login</h1>
       <InputComponent label="メールアドレス" type="email" classname="email-input"></InputComponent>
@@ -41,7 +41,6 @@ export default {
       const login = await this.$axios.post(apiUrl, formData);
 
       if(login.data.status == "success"){
-        alert("ログインに成功しました");
         const sessiondata = await this.$axios.get(getSessionUrl);
         this.$store.commit('session/add', sessiondata.data);
         this.$router.push("/posthome");

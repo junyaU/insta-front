@@ -2,12 +2,12 @@
   <div class="container">
     <AppHeader></AppHeader>
     <h1>いいねしたユーザー</h1>
-    <client-only placeholder="Loading…">
+    <client-only >
     <div class="user-wrapper" v-if="favoriteUsers.Favorite[0]">
       <div v-for=" (user, index) in favoriteUsers.Favorite" :key="index">
         <nuxt-link :to="{name: 'mypage-id', params: {id: user.Id}}" class="user-content">
           <div class="image-wrapper">
-            <img :src="user.Image"  v-if="user.Image">
+            <img v-lazy="user.Image"  v-if="user.Image">
             <img src="~/assets/image/noimage.png" v-else>
           </div>
           <h1 class="user-name">{{user.Name}}</h1>
@@ -32,7 +32,6 @@ export default {
         user.Image = imageHeader + imageData.image
       }
     }
-
     return {favoriteUsers}
   },
 }

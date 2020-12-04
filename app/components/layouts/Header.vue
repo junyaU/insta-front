@@ -1,20 +1,27 @@
 <template>
   <header>
-    <client-only placeholder="Loading…">
+    <client-only>
       <div class="header-parts">
         <nuxt-link to="/posthome">
-          <p>Home</p>
+          <img src="~/assets/image/homeicon.png" class="icon">
         </nuxt-link>
       </div>
       <div class="header-parts">
         <nuxt-link to="/" v-if="!this.$store.state.session.data[0]">
-          <p>login</p>
+          <img src="~/assets/image/loginicon.png" class="icon">
         </nuxt-link>
-        <p @click="logout" v-else>Logout</p>
+        <nuxt-link :to="{name: 'mypage-id', params: {id: sessionUserId}}" v-else>
+          <img v-lazy="imgData" class="icon user-icon">
+        </nuxt-link>
       </div>
       <div class="header-parts">
         <nuxt-link to="/postform">
-          <p>Post</p>
+          <img src="~/assets/image/posticon.png" class="icon">
+        </nuxt-link>
+      </div>
+      <div class="header-parts">
+        <nuxt-link :to="{name: 'config-id', params:{id: sessionUserId}}">
+          <img src="~/assets/image/configicon.png" class="icon">
         </nuxt-link>
       </div>
     </client-only>
@@ -23,6 +30,16 @@
 
 <script>
 export default {
+  data(){
+    return {imgData:[]}
+  },
+  computed:{
+    sessionUserId(){
+      const sessionExist = this.$store.state.session.data[0];
+      const data = sessionExist ? this.$store.state.session.data[0].Id : 0;
+      return data;
+    }
+  },
   methods:{
     async logout(){
       const apiUrl = "/api/logout";
@@ -35,10 +52,24 @@ export default {
       if(!sessionData.data){
         this.$store.commit("session/delete");
       }
-    }
+    },
+
+    async getImage(){
+      let imageData = "";
+      const imageHeader = 'data:image/jpg;base64,';
+      const profileImagedata = await this.$axios.get(`/api/getprofileimage/${this.sessionUserId}`);
+
+      if(profileImagedata.data.image){
+        imageData = imageHeader + profileImagedata.data.image;
+      }else{
+        imageData = require("~/assets/image/noimage.png");
+      }
+      this.imgData = imageData;
+    },
   },
   created(){
-    this.session()
+    this.session();
+    this.getImage();
   }
 }
 </script>
@@ -60,10 +91,22 @@ export default {
 
   .header-parts{
     cursor: pointer;
+    width: 8%;
   }
 
   a{
     text-decoration: none;
     color: inherit;
   }
+
+  .icon{
+    width: 100%;
+    max-width: 35px;
+  }
+
+  .user-icon{
+    border-radius: 50%;
+  }
+
+
 </style>

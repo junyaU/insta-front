@@ -61,7 +61,6 @@ export default {
 
       const signup = await this.$axios.post(apiUrl, formData);
       if(signup.data.status == "success"){
-        alert("ログインに成功しました");
         const sessionData = await this.$axios.get(getSessionUrl);
         this.$store.commit("session/add", sessionData.data);
         this.$router.push("/posthome");

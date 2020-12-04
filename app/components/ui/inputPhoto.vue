@@ -13,6 +13,7 @@
 <script>
 export default {
   props: {
+    labelclass: String,
     classname: String
   },
   methods: {

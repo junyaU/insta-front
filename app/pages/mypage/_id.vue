@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-    <client-only placeholder="Loading…">
+    <client-only>
       <AppHeader></AppHeader>
       <div class="profile-area">
         <div class="upper-wrapper">
           <div class="photo-image">
-            <img v-if="imageData" :src="imageData"  class="image-data">
+            <img v-if="imageData" v-lazy="imageData"  class="image-data">
             <img class="image-data" src="~/assets/image/noimage.png" v-else>
           </div>
           <nuxt-link :to="{name: 'image-id', params: {id: data.Id}}" v-if="data.Id == sessionUserId">
@@ -27,7 +27,7 @@
       <div class="post-area">
         <div class="post-wrapper" v-for="(post, index) in data.Posts" :key="index">
           <nuxt-link :to="{name: 'postdetail-id', params:{id: post.Id}}">
-            <img :src="imageHeader + post.Image" class="post-image">
+            <img v-lazy="imageHeader + post.Image" class="post-image">
           </nuxt-link>
         </div>
       </div>
@@ -39,8 +39,10 @@
 export default {
   async asyncData({app, params}){
     const paramId = params.id;
-    const data = await app.$axios.$get(`/api/user/${paramId}`);
-    const profileImageData = await app.$axios.$get(`/api/getprofileimage/${paramId}`);
+    const [data, profileImageData] = await Promise.all([
+      app.$axios.$get(`/api/user/${paramId}`),
+      app.$axios.$get(`/api/getprofileimage/${paramId}`),
+    ])
     let imageData = "";
     const imageHeader = 'data:image/jpg;base64,';
 
@@ -50,6 +52,7 @@ export default {
     }
     return {data, imageData, imageHeader}
   },
+
   computed:{
     sessionUserId(){
       const sessionExist = this.$store.state.session.data[0];
