@@ -23,7 +23,7 @@ export default {
 
   methods: {
     async post(){
-      const apiUrl = "/api/post";
+      const apiUrl = "/api/auth/post";
       const userId = this.sessionUserId;
       const textDom = document.querySelector(".text-input");
       const imageDom = document.querySelector(".image-input");
@@ -50,8 +50,12 @@ export default {
       formData.append("Comment", textDom.value);
       formData.append("Image", image);
 
-      await this.$axios.post(apiUrl, formData);
-      this.$router.push("/posthome");
+      const postData = await this.$axios.post(apiUrl, formData);
+      if(postData.status == 200){
+        this.$router.push("/posthome");
+      }else{
+        alert("投稿に失敗しました。");
+      }
     }
   }
 }

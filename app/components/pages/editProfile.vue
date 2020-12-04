@@ -17,7 +17,7 @@ export default {
   },
   methods:{
   async updateProfile(){
-    const apiUrl = "/api/editprofile";
+    const apiUrl = "/api/auth/editprofile";
       const nameDom = document.querySelector(".input-name");
       const emailDom = document.querySelector(".input-email");
       const userId = this.sessionUserId;
@@ -38,9 +38,13 @@ export default {
       formData.append("Name", nameDom.value);
       formData.append("Email", emailDom.value);
 
-      await this.$axios.post(apiUrl, formData);
-      alert("プロフィールが更新されました");
+      const editData = await this.$axios.post(apiUrl, formData);
+      if(editData.status == 200){
+        alert("プロフィールが更新されました");
       this.$router.push("/posthome");
+      }else{
+        alert("プロフィールの更新に失敗しました。");
+      }
     },
   }
 }

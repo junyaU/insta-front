@@ -20,7 +20,7 @@ export default {
 
   methods:{
       async changePassword(){
-      const apiUrl =  "/api/changepassword";
+      const apiUrl =  "/api/auth/changepassword";
       const userId = this.sessionUserId;
       const nowPassword = document.querySelector(".now-password");
       const newPassword = document.querySelector(".new-password");
@@ -47,7 +47,7 @@ export default {
       formData.append("NowPassword", nowPassword.value);
 
       const passwordData = await this.$axios.post(apiUrl, formData);
-      if(passwordData.data){
+      if(passwordData.status == 200){
         alert("パスワードの変更に成功しました。")
         this.$router.push("/posthome");
       }else{
