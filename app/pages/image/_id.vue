@@ -14,7 +14,7 @@
 export default {
   methods:{
     async upload(){
-      const apiUrl = "/api/upload";
+      const apiUrl = "/api/auth/upload";
       const userId = document.querySelector(".userId").value;
       const imageDom = document.querySelector(".image-input");
       const image = imageDom.files[0];
@@ -34,8 +34,12 @@ export default {
       formData.append("userId", userId);
       formData.append("Image", image);
 
-      const upload =await this.$axios.post(apiUrl, formData);
-      this.$router.push("/posthome");
+      const upload = await this.$axios.post(apiUrl, formData);
+      if(upload.status == 200){
+        this.$router.push("/posthome");
+      }else{
+        alert("画像の投稿に失敗しました。")
+      }
     }
   }
 }

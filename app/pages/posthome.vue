@@ -57,7 +57,7 @@ export default {
 
       if(favorited == true){
         //いいねを外す
-        apiUrl = "/api/unfavorite";
+        apiUrl = "/api/auth/unfavorite";
 
         e.currentTarget.dataset.favorited = 0;
         targetPost[0].Favonum -= 1;
@@ -65,7 +65,7 @@ export default {
         e.currentTarget.innerHTML = `♡${targetPost[0].Favonum}`;
       }else{
         //いいねをつける
-        apiUrl = "/api/favorite";
+        apiUrl = "/api/auth/favorite";
 
         e.currentTarget.dataset.favorited = 1;
         targetPost[0].Favonum +=  1;
@@ -80,7 +80,7 @@ export default {
 
     deletePost(e){
       const postId = e.currentTarget.getAttribute("data-id");
-      const deleteUrl = `/api/deletepost/${postId}`;
+      const deleteUrl = `/api/auth/deletepost/${postId}`;
       const alertMessage = confirm("この投稿を削除します。よろしいですか？");
       if(alertMessage){
         e.currentTarget.parentNode.remove();
