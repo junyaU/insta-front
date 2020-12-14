@@ -7,7 +7,7 @@
       <div v-for=" (user, index) in favoriteUsers.Favorite" :key="index">
         <nuxt-link :to="{name: 'mypage-id', params: {id: user.Id}}" class="user-content">
           <div class="image-wrapper">
-            <img v-lazy="user.Image"  v-if="user.Image">
+            <img v-lazy="user.Imageprofile.Image"  v-if="user.Imageprofile">
             <img src="~/assets/image/noimage.png" v-else>
           </div>
           <h1 class="user-name">{{user.Name}}</h1>
@@ -24,14 +24,24 @@ export default {
   async asyncData({app, params}){
     const favoriteUsers = await app.$axios.$get(`/api/getfavoriteuser/`+ params.id)
     const imageHeader = 'data:image/jpg;base64,'
+    const userIds = [];
 
-    //ユーザーの画像取得後配列に入れる
+    //ユーザーのIDを配列に入れる
     for(const user of favoriteUsers.Favorite){
-      const imageData = await app.$axios.$get(`/api/getprofileimage/` + user.Id)
-      if (imageData){
-        user.Image = imageHeader + imageData.image
-      }
+      userIds.push(user.Id);
     }
+
+    //並列処理
+    const imageDatas = await Promise.all(userIds.map(async id =>{
+      return await app.$axios.$get(`/api/getprofileimage/` + id);
+    }));
+
+    //ユーザーIDの配列と画像データが入っている配列は必然的に同じ要素数になる
+    for(let i=0; i<imageDatas.length; i++){
+      if(imageDatas[i])
+      favoriteUsers.Favorite[i].Imageprofile.Image = imageHeader + imageDatas[i].image
+    }
+
     return {favoriteUsers}
   },
 }
