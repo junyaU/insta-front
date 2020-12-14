@@ -8,6 +8,8 @@ import InputPhoto from "~/components/ui/InputPhoto.vue";
 import EditProfile from "~/components/pages/editProfile.vue";
 import ChangePassword from "~/components/pages/changePassword.vue";
 import Logout from "~/components/pages/logout.vue";
+import CommentArea from "~/components/ui/commentArea.vue";
+import CommentModal from "~/components/ui/commentModal.vue";
 
 Vue.mixin({
   components:{
@@ -18,6 +20,9 @@ Vue.mixin({
     InputPhoto,
     EditProfile,
     ChangePassword,
-    Logout
+    Logout,
+    CommentArea,
+    CommentModal
+
   }
 })

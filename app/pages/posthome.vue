@@ -5,16 +5,16 @@
       <h1>Post List</h1>
       <div class="post-wrapper">
         <div class="post-content" v-for="(data, index) in datas" :key="index">
-          <h2 class="user-name">
+          <h2 class="post-user-name">
             <nuxt-link :to="{name: 'mypage-id', params: {id: data.User.Id}}">
               {{data.User.Name}}
             </nuxt-link>
           </h2>
-          <a class="delete-button" :data-id="data.Id" @click="deletePost" v-if="sessionUserId == data.User.Id">削除</a>
-          <div class="image-wrapper">
+          <a class="post-delete-button" :data-id="data.Id" @click="deletePost" v-if="sessionUserId == data.User.Id">削除</a>
+          <div class="post-image-wrapper">
             <img v-lazy="'data:image/jpg;base64,' +  data.Image" class="image-photo">
           </div>
-          <div class="comment-wrapper">
+          <div class="post-comment-wrapper">
             <p>{{data.Comment}}</p>
           </div>
           <span class="favo-button" @click="favorite" :data-id="data.Id" data-favorited="0" v-if="!data.Favorite.map(user=>user.Id).includes(sessionUserId)">♡{{data.Favonum}}</span>
@@ -22,6 +22,8 @@
           <nuxt-link :to="{name: 'postdetail-id', params: {id: data.Id}}">
             <p class="favorite-user-list">いいねしたユーザー</p>
           </nuxt-link>
+          <CommentArea class="comment-area" :postid=data.Id :userid=sessionUserId v-if="sessionUserId"></CommentArea>
+          <CommentModal :comments="data.Comments"></CommentModal>
         </div>
       </div>
     </client-only>
@@ -32,6 +34,8 @@
 export default {
   async asyncData({app}) {
     const datas = await app.$axios.$get(`/api/getpost`);
+    const imageHeader = 'data:image/jpg;base64,';
+
     return {datas}
   },
   computed:{
@@ -103,20 +107,20 @@ export default {
     margin: 10px auto;
   }
 
-  .user-name{
+  .post-user-name{
     text-align: left;
     margin-left: 30px;
     margin-bottom: 20px;
   }
 
-  .image-wrapper{
+  .post-image-wrapper{
     border: 1px solid #aaaa;
     height: 300px;
     width: 72%;
     margin: 0 auto;
   }
 
-  .comment-wrapper{
+  .post-comment-wrapper{
     width: 60%;
     padding: 15px;
   }
@@ -145,7 +149,7 @@ export default {
     color: #ff0000;
   }
 
-  .delete-button{
+  .post-delete-button{
     position: absolute;
     top: 1%;
     right: 5%;
@@ -164,8 +168,12 @@ export default {
     font-weight: bold;
   }
 
+  .comment-area{
+    width: 60%;
+  }
+
     @media screen and (min-width:320px) and (max-width:414px) {
-    .image-wrapper{
+    .post-image-wrapper{
       height: 150px;
     }
 
@@ -173,7 +181,7 @@ export default {
       width: 60%;
     }
 
-    .user-name{
+    .post-user-name{
       font-size: 15px;
     }
 
@@ -185,11 +193,11 @@ export default {
       font-size: 10px;
     }
 
-    .comment-wrapper p{
+    .post-comment-wrapper p{
       font-size: 8px;
     }
 
-    .delete-button{
+    .post-delete-button{
       font-size: 12px;
     }
 }
