@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <h1>パスワード変更</h1>
+    <h1 class="config-header">パスワード変更</h1>
     <InputComponent type="password" label="現在のパスワード" classname="now-password"></InputComponent>
     <InputComponent type="password" label="新しいパスワード" classname="new-password"></InputComponent>
     <InputComponent type="password" label="新しいパスワードを確認" classname="re-password"></InputComponent>
-    <SubmitButton @click.native="changePassword"></SubmitButton>
+    <SubmitButton @click.native="changePassword" class="config-submit-button"></SubmitButton>
     </div>
 </template>
 
