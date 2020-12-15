@@ -63,4 +63,14 @@ export default {
     border-radius: 3px;
     border: none;
   }
+  @media screen and (min-width:320px) and (max-width:414px) {
+    .comment-input{
+      width: 90%;
+      margin-bottom: 0;
+    }
+
+    .comment-submit{
+      font-size: 10px;
+    }
+  }
 </style>
