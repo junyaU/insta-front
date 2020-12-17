@@ -6,7 +6,7 @@
           <img src="~/assets/image/homeicon.png" class="icon">
         </nuxt-link>
       </div>
-      <div class="header-parts">
+      <div class="header-parts header-img-wrapper">
         <nuxt-link to="/" v-if="!this.$store.state.session.data[0]">
           <img src="~/assets/image/loginicon.png" class="icon">
         </nuxt-link>
@@ -81,7 +81,6 @@ export default {
     width: 100%;
     height: 7%;
     position: fixed;
-    font-size: 30px;
     top: 0%;
     display: flex;
     align-items: center;
@@ -94,6 +93,32 @@ export default {
     width: 8%;
   }
 
+  .header-img-wrapper{
+    position: relative;
+    border-radius: 50%;
+    width:8%;
+    max-width:8%;
+    height: auto;
+  }
+
+  .header-img-wrapper:before{
+    content: "";
+    display: block;
+    padding-top: 100%;
+  }
+
+  .header-img-wrapper img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
   a{
     text-decoration: none;
     color: inherit;
@@ -101,12 +126,19 @@ export default {
 
   .icon{
     width: 100%;
-    max-width: 35px;
+
   }
 
-  .user-icon{
-    border-radius: 50%;
+  @media screen and (min-width:600px){
+    .icon{
+      max-width: 45px;
+    }
+
+    .header-img-wrapper{
+      max-width:45px;
+    }
   }
+
 
 
 </style>

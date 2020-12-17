@@ -1,6 +1,7 @@
 <template>
+<div class="all-wrapper">
+  <AppHeader></AppHeader>
   <div class="container">
-    <AppHeader></AppHeader>
     <div class="config-wrapper">
       <div class="tab">
         <p class="menu-text" data-num="1" @click="selectMenu">プロフィールを編集<span class="selected-sign selected">◀︎</span></p>
@@ -20,6 +21,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>

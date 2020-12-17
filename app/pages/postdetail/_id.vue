@@ -1,6 +1,7 @@
 <template>
+<div class="all-wrapper">
+  <AppHeader></AppHeader>
   <div class="container">
-    <AppHeader></AppHeader>
     <h1>いいねしたユーザー</h1>
     <client-only >
     <div class="user-wrapper" v-if="favoriteUsers.Favorite[0]">
@@ -17,6 +18,7 @@
     <h2 class="non-favorite-text" v-else>いいねしたユーザーはいません</h2>
     </client-only>
   </div>
+</div>
 </template>
 
 <script>

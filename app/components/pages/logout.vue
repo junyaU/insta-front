@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <h1 class="config-header">ログアウト</h1>
     <p class="logout-text">アカウントからログアウトします。<br>
       下のボタンを押してください。</p>

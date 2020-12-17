@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <h1 class="config-header">パスワード変更</h1>
     <InputComponent type="password" label="現在のパスワード" classname="now-password"></InputComponent>
     <InputComponent type="password" label="新しいパスワード" classname="new-password"></InputComponent>
