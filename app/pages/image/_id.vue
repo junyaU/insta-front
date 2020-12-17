@@ -1,13 +1,15 @@
 <template>
+<div class="all-wrapper">
+  <AppHeader></AppHeader>
   <div class="container">
     <client-only>
-      <AppHeader></AppHeader>
       <h1>プロフィール画像設定</h1>
       <InputPhoto classname="image-input"></InputPhoto>
       <input class="userId" type="hidden" :value="$route.params.id">
       <SubmitButton @click.native="upload"></SubmitButton>
     </client-only>
   </div>
+</div>
 </template>
 
 <script>

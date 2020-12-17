@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <p  v-if="comments[0]" class="comment-number" @click="showCommentModal">{{comments.length}}件のコメントを見る</p>
     <div class="over-lay" @click="closeModal">
       <div class="comment-modal">
@@ -154,5 +154,12 @@ export default {
   a{
     color: inherit;
     text-decoration: none;
+  }
+
+  @media screen and (min-width:320px) and (max-width:414px) {
+    .comment-number{
+      font-size: 8px;
+      width: 46%;
+    }
   }
 </style>

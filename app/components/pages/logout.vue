@@ -1,9 +1,9 @@
 <template>
   <div>
-      <h1>ログアウト</h1>
-      <p class="logout-text">このアカウントからログアウトします。<br>
-        よろしければ下のボタンを押してください。</p>
-      <SubmitButton @click.native="logout"></SubmitButton>
+    <h1 class="config-header">ログアウト</h1>
+    <p class="logout-text">アカウントからログアウトします。<br>
+      下のボタンを押してください。</p>
+    <SubmitButton @click.native="logout" class="config-submit-button"></SubmitButton>
   </div>
 </template>
 

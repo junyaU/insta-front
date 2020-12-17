@@ -1,7 +1,8 @@
 <template>
+<div class="all-wrapper">
+  <AppHeader></AppHeader>
   <div class="container">
     <client-only placeholder="ok">
-      <AppHeader></AppHeader>
       <h1 class="login-title">Login</h1>
       <InputComponent label="メールアドレス" type="email" classname="email-input"></InputComponent>
       <InputComponent label="パスワード" type="password" classname="password-input"></InputComponent>
@@ -11,6 +12,7 @@
       </nuxt-link>
     </client-only>
   </div>
+</div>
 </template>
 
 <script>

@@ -1,6 +1,8 @@
 <template>
+<div class="all-wrapper">
+  <AppHeader></AppHeader>
   <div class="container">
-    <AppHeader></AppHeader>
+    <div class="config-wrapper">
       <div class="tab">
         <p class="menu-text" data-num="1" @click="selectMenu">プロフィールを編集<span class="selected-sign selected">◀︎</span></p>
         <p class="menu-text" data-num="2" @click="selectMenu">パスワードを変更<span class="selected-sign">◀︎</span></p>
@@ -17,7 +19,9 @@
           <Logout></Logout>
         </div>
       </div>
+    </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -96,25 +100,29 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
   .tab{
-    position: absolute;
-    top: 20%;
-    left: 5%;
+    margin-top: 5%;
+    margin-left: 10%;
     width: 20%;
     font-size: 15px;
     background-color: #fafafa;
     border-right: 1px solid #333;
   }
 
+  .config-wrapper{
+    display: flex;
+    align-items: baseline;
+    justify-content: left;
+  }
+
   .tab p{
     padding: 10px;
-
   }
 
   .edit-wrapper{
-    width: 40%;
-    margin: 0 auto;
+    width: 50%;
+
   }
 
   .password-edit{
@@ -146,5 +154,22 @@ export default {
     margin-bottom: 20px;
   }
 
+  @media screen and (min-width:320px) and (max-width:414px) {
+    .tab{
+      width: 26%;
+      font-size: 8px;
+    }
 
+    .edit-wrapper{
+      margin-left: 4%;
+    }
+
+    .config-header{
+      font-size: 20px;
+    }
+
+    .logout-text{
+      font-size: 10px;
+    }
+  }
 </style>
