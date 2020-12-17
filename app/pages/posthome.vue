@@ -1,7 +1,8 @@
 <template>
+<div class="all-wrapper">
+  <AppHeader></AppHeader>
   <div class="container">
     <client-only>
-      <AppHeader></AppHeader>
       <h1>Post List</h1>
       <div class="post-wrapper">
         <div class="post-content" v-for="(data, index) in datas" :key="index">
@@ -28,13 +29,13 @@
       </div>
     </client-only>
   </div>
+</div>
 </template>
 
 <script>
 export default {
   async asyncData({app}) {
     const datas = await app.$axios.$get(`/api/getpost`);
-    const imageHeader = 'data:image/jpg;base64,';
 
     return {datas}
   },

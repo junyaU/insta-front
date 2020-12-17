@@ -1,6 +1,7 @@
 <template>
+<div class="all-wrapper">
+  <AppHeader></AppHeader>
   <section class="container">
-    <AppHeader></AppHeader>
     <h1 class="title">Instagram</h1>
     <p class="register-text">アカウントを登録する</p>
     <div>
@@ -15,6 +16,7 @@
       </nuxt-link>
     </div>
   </section>
+</div>
 </template>
 
 <script>

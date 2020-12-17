@@ -1,6 +1,7 @@
 <template>
+<div class="all-wrapper">
+  <AppHeader></AppHeader>
   <div class="container">
-      <AppHeader></AppHeader>
     <client-only>
       <h1>Post Form</h1>
       <InputPhoto classname="image-input"></InputPhoto>
@@ -8,6 +9,7 @@
       <SubmitButton @click.native="post"></SubmitButton>
     </client-only>
   </div>
+</div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <h1 class="config-header">プロフィール編集</h1>
     <InputComponent type="text" label="名前" classname="input-name"></InputComponent>
     <InputComponent type="email" label="メールアドレス" classname="input-email"></InputComponent>
