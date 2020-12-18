@@ -102,27 +102,26 @@ export default {
 
 <style>
   .tab{
-    margin-top: 5%;
-    margin-left: 10%;
-    width: 20%;
-    font-size: 15px;
-    background-color: #fafafa;
-    border-right: 1px solid #333;
+    display: flex;
   }
 
   .config-wrapper{
-    display: flex;
-    align-items: baseline;
-    justify-content: left;
+    width: 100%;
   }
 
   .tab p{
     padding: 10px;
+    border: 1px solid #dcdcdc;
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    margin-right: 2%;
   }
 
   .edit-wrapper{
-    width: 50%;
-
+    border: 1px solid #dcdcdc;
+    border-radius: 0 8px 8px 8px;
+    padding:  3% 0;
+    width: 100%;
   }
 
   .password-edit{
@@ -140,9 +139,7 @@ export default {
   }
 
   .selected-sign{
-    position: absolute;
-    top: 30%;
-    right: 5%;
+
     display: none;
   }
 
@@ -156,12 +153,7 @@ export default {
 
   @media screen and (min-width:320px) and (max-width:414px) {
     .tab{
-      width: 26%;
-      font-size: 8px;
-    }
-
-    .edit-wrapper{
-      margin-left: 4%;
+      font-size: 6px;
     }
 
     .config-header{

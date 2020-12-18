@@ -1,6 +1,6 @@
 <template>
   <div>
-    <textarea :class="classname" rows="6" cols="60"></textarea>
+    <textarea :class="classname" rows="3" cols="30"></textarea>
   </div>
 </template>
 
@@ -16,8 +16,7 @@ export default {
 <style scoped>
   textarea{
   width: 40%;
-  height: 200px;
-  padding: 5px;
+  padding: 2%;
   border-radius: 5px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
@@ -29,7 +28,6 @@ export default {
 @media screen and (min-width:320px) and (max-width:414px){
   textarea{
     width: 60%;
-    height: 200px;
   }
 }
 </style>

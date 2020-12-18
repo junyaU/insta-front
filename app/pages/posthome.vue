@@ -67,6 +67,7 @@ export default {
       const targetPost = this.datas.filter(data => data.Id == postId);
 
       if(!userId){
+        alert("「いいね！」を押すにはログインする必要があります。")
         return;
       }
 
