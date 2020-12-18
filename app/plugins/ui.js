@@ -10,6 +10,7 @@ import ChangePassword from "~/components/pages/changePassword.vue";
 import Logout from "~/components/pages/logout.vue";
 import CommentArea from "~/components/ui/commentArea.vue";
 import CommentModal from "~/components/ui/commentModal.vue";
+import PostEditModal from "~/components/ui/postEditModal.vue";
 
 Vue.mixin({
   components:{
@@ -22,7 +23,8 @@ Vue.mixin({
     ChangePassword,
     Logout,
     CommentArea,
-    CommentModal
+    CommentModal,
+    PostEditModal
 
   }
 })

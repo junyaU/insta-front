@@ -42,17 +42,24 @@ export default {
 <style scoped>
   .box{
     width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 2% 1%;
   }
 
   .comment-input{
     padding: 5px;
     border-radius: 5px;
-    border: 1px solid #ccc;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background-color: #fafafa;
-    margin-bottom: 20px
+    width: 90%;
+    border: none;
+  }
+
+  .comment-input:focus{
+    outline: 0;
+    box-shadow: none;
   }
 
   .comment-submit{

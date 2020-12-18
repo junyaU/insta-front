@@ -1,30 +1,41 @@
 <template>
 <div class="all-wrapper">
   <AppHeader></AppHeader>
-  <div class="container">
+  <div class="post-container">
     <client-only>
       <h1>Post List</h1>
       <div class="post-wrapper">
         <div class="post-content" v-for="(data, index) in datas" :key="index">
-          <h2 class="post-user-name">
-            <nuxt-link :to="{name: 'mypage-id', params: {id: data.User.Id}}">
-              {{data.User.Name}}
-            </nuxt-link>
-          </h2>
-          <a class="post-delete-button" :data-id="data.Id" @click="deletePost" v-if="sessionUserId == data.User.Id">削除</a>
-          <div class="post-image-wrapper">
-            <img v-lazy="'data:image/jpg;base64,' +  data.Image" class="image-photo">
+          <div class="post-head">
+            <div class="post-user-image-wrapper">
+              <img class="post-user-image" v-lazy="'data:image/jpg;base64,'+data.User.Imageprofile.Image" v-if="data.User.Imageprofile">
+              <img class="post-user-image" src="~/assets/image/noimage.png" v-else>
+            </div>
+            <h4 class="post-user-name">
+              <nuxt-link :to="{name: 'mypage-id', params: {id: data.User.Id}}">
+                {{data.User.Name}}
+              </nuxt-link>
+            </h4>
+            <p class="post-delete-button" :data-id="data.Id" @click="deletePost" v-if="sessionUserId == data.User.Id">•••</p>
           </div>
+          <div class="post-image-wrapper">
+            <img v-lazy="'data:image/jpg;base64,' +  data.Image" class="post-image-photo">
+          </div>
+          <div class="post-button-area">
+            <div class="post-button">
+              <img class="favo-button" src="~assets/image/favorite_button.png" @click="favorite" :data-id="data.Id" data-favorited="0" v-if="!data.Favorite.map(user=>user.Id).includes(sessionUserId)">
+              <img src="~assets/image/favorited_button.png" class="favo-button" @click="favorite" :data-id="data.Id" data-favorited="1" v-else>
+            </div>
+            <img class="post-button" src="~/assets/image/comment_button.png">
+          </div>
+          <nuxt-link :to="{name: 'postdetail-id', params: {id: data.Id}}">
+            <p class="favorite-user-list"><span class="favorite-number">{{data.Favonum}}人</span>が「いいね！」しました</p>
+          </nuxt-link>
           <div class="post-comment-wrapper">
             <p>{{data.Comment}}</p>
           </div>
-          <span class="favo-button" @click="favorite" :data-id="data.Id" data-favorited="0" v-if="!data.Favorite.map(user=>user.Id).includes(sessionUserId)">♡{{data.Favonum}}</span>
-          <span class="favo-button favorited" @click="favorite" :data-id="data.Id" data-favorited="1" v-else>❤️{{data.Favonum}}</span>
-          <nuxt-link :to="{name: 'postdetail-id', params: {id: data.Id}}">
-            <p class="favorite-user-list">いいねしたユーザー</p>
-          </nuxt-link>
-          <CommentArea class="comment-area" :postid=data.Id :userid=sessionUserId v-if="sessionUserId"></CommentArea>
           <CommentModal :comments="data.Comments"></CommentModal>
+          <CommentArea class="comment-area" :postid=data.Id :userid=sessionUserId v-if="sessionUserId"></CommentArea>
         </div>
       </div>
     </client-only>
@@ -66,16 +77,14 @@ export default {
 
         e.currentTarget.dataset.favorited = 0;
         targetPost[0].Favonum -= 1;
-        e.currentTarget.style.color = "black";
-        e.currentTarget.innerHTML = `♡${targetPost[0].Favonum}`;
+        e.currentTarget.src = require('~/assets/image/favorite_button.png');
       }else{
         //いいねをつける
         apiUrl = "/api/auth/favorite";
 
         e.currentTarget.dataset.favorited = 1;
         targetPost[0].Favonum +=  1;
-        e.currentTarget.style.color = "red";
-        e.currentTarget.innerHTML = `❤️${targetPost[0].Favonum}`;
+        e.currentTarget.src =require('~/assets/image/favorited_button.png');
       }
 
       formData.append("postid", postId);
@@ -97,40 +106,118 @@ export default {
 </script>
 
 <style scoped>
+.post-container {
+  width: 43%;
+  height: 100vh;
+  min-height: 100%;
+  text-align: center;
+  margin: 0 auto;
+  padding-top: 5%;
+  background-color: #fafafa;
+}
   .post-content{
-    border: 2px solid #000000;
     margin: 15px 0;
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
     position: relative;
   }
 
   .post-wrapper{
-    width: 50%;
+    width: 100%;
     margin: 10px auto;
   }
 
+  .post-head{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: 2% 0;
+  }
+
   .post-user-name{
-    text-align: left;
-    margin-left: 30px;
-    margin-bottom: 20px;
+    font-size: 1rem;
+  }
+
+  .post-user-image-wrapper{
+    position: relative;
+    height: auto;
+    border-radius: 50%;
+    width:10%;
+    max-width: 10%;
+    border: 1px solid #dcdcdc;
+    margin: 0 2%;
+  }
+
+  .post-user-image-wrapper::before{
+    padding-top: 100%;
+    content: "";
+    display: block;
+  }
+
+  .post-user-image{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
   }
 
   .post-image-wrapper{
-    border: 1px solid #aaaa;
-    height: 300px;
-    width: 72%;
-    margin: 0 auto;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .post-image-wrapper::before{
+    content: "";
+    display: block;
+    padding-top: 100%;
+  }
+
+  .post-image-photo{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    object-fit: cover;
+    width: 100%;
+    height:100%;
+  }
+
+  .post-button-area{
+    display: flex;
+  }
+
+  .post-button{
+    margin-left: 3%;
+  }
+
+  .favorite-user-list{
+    text-align: left;
+    margin: 2% 0;
+    margin-left: 3%;
+  }
+
+
+  .favorite-number{
+    font-weight: bold;
   }
 
   .post-comment-wrapper{
-    width: 60%;
-    padding: 15px;
+    text-align: left;
+    margin-left: 3%;
+    margin-bottom: 2%;
   }
 
   .favo-button{
-    position: absolute;
     font-size: 30px;
-    right: 3%;
-    bottom: 8%;
     cursor: pointer;
     user-select: none;
   }
@@ -146,49 +233,22 @@ export default {
     object-fit: cover;
   }
 
-  .favorited{
-    color: #ff0000;
-  }
-
   .post-delete-button{
     position: absolute;
-    top: 1%;
     right: 5%;
-    font-size: 20px;
-    background: #ff0000;
-    color: #ffffff;
-    padding: 5px;
-    border-radius: 5px;
-  }
-
-  .favorite-user-list{
-    text-align: right;
-    position: absolute;
-    bottom: 0;
-    right: 1%;
-    font-weight: bold;
+    bottom: 35%;
+    cursor: pointer;
   }
 
   .comment-area{
-    width: 60%;
+    border-top: 1px solid #dcdcdc;
   }
 
     @media screen and (min-width:320px) and (max-width:414px) {
-    .post-image-wrapper{
-      height: 150px;
-    }
-
-    .post-wrapper{
-      width: 60%;
-    }
-
-    .post-user-name{
-      font-size: 15px;
-    }
-
-    .favo-button{
-      font-size: 15px;
-    }
+    .post-container{
+    padding-top: 18%;
+    width: 100%;
+  }
 
     .favorite-user-list{
       font-size: 10px;
