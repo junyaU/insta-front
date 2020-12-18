@@ -76,6 +76,8 @@ export default {
 
 <style>
   .comment-number{
+    text-align: left;
+    margin-left: 3%;
     color:#8e8e8e;
     width: 50%;
     margin-bottom: 5px;
