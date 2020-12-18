@@ -8,7 +8,7 @@
       </div>
       <div class="header-parts header-img-wrapper">
         <nuxt-link to="/" v-if="!this.$store.state.session.data[0]">
-          <img src="~/assets/image/loginicon.png" class="icon">
+          <img  src="~/assets/image/loginicon.png" class="icon no-login-icon">
         </nuxt-link>
         <nuxt-link :to="{name: 'mypage-id', params: {id: sessionUserId}}" v-else>
           <img v-lazy="imgData" class="icon user-icon">
@@ -91,6 +91,10 @@ export default {
   .header-parts{
     cursor: pointer;
     width: 8%;
+  }
+
+  .no-login-icon{
+    border-radius: 0 !important;
   }
 
   .header-img-wrapper{
