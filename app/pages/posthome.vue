@@ -23,10 +23,9 @@
           </div>
           <div class="post-button-area">
             <div class="post-button">
-              <img class="favo-button" src="~assets/image/favorite_button.png" @click="favorite" :data-id="data.Id" data-favorited="0" v-if="!data.Favorite.map(user=>user.Id).includes(sessionUserId)">
-              <img src="~assets/image/favorited_button.png" class="favo-button" @click="favorite" :data-id="data.Id" data-favorited="1" v-else>
+              <img class="favo-button buttons" src="~assets/image/favorite_button.png" @click="favorite" :data-id="data.Id" data-favorited="0" v-if="!data.Favorite.map(user=>user.Id).includes(sessionUserId)">
+              <img class="favo-button buttons" src="~assets/image/favorited_button.png" @click="favorite" :data-id="data.Id" data-favorited="1" v-else>
             </div>
-            <img class="post-button" src="~/assets/image/comment_button.png">
           </div>
           <nuxt-link :to="{name: 'postdetail-id', params: {id: data.Id}}">
             <p class="favorite-user-list"><span class="favorite-number">{{data.Favonum}}人</span>が「いいね！」しました</p>
@@ -34,7 +33,7 @@
           <div class="post-comment-wrapper">
             <p>{{data.Comment}}</p>
           </div>
-          <CommentModal :comments="data.Comments"></CommentModal>
+          <CommentModal :comments="data.Comments" :user="data.User.Name" :image="data.User.Imageprofile"></CommentModal>
           <CommentArea class="comment-area" :postid=data.Id :userid=sessionUserId v-if="sessionUserId"></CommentArea>
         </div>
       </div>
@@ -217,7 +216,6 @@ export default {
   }
 
   .favo-button{
-    font-size: 30px;
     cursor: pointer;
     user-select: none;
   }
@@ -245,10 +243,10 @@ export default {
   }
 
     @media screen and (min-width:320px) and (max-width:414px) {
-    .post-container{
-    padding-top: 18%;
-    width: 100%;
-  }
+      .post-container{
+      padding-top: 18%;
+      width: 100%;
+    }
 
     .favorite-user-list{
       font-size: 10px;
@@ -260,6 +258,10 @@ export default {
 
     .post-delete-button{
       font-size: 12px;
+    }
+
+    .buttons {
+      width: 20px;
     }
 }
 </style>

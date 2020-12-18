@@ -3,18 +3,26 @@
     <p  v-if="comments[0]" class="comment-number" @click="showCommentModal">{{comments.length}}件のコメントを見る</p>
     <div class="over-lay" @click="closeModal">
       <div class="comment-modal">
-        <h1 class="comment-header">Comment</h1>
+        <div class="comment-header">
+          <div class="header-wrapper">
+            <div class="post-user-image-wrapper">
+              <img class="post-user-image" v-lazy="'data:image/jpg;base64,'+image.Image" alt="" v-if="image">
+              <img class="post-user-image" src="~assets/image/noimage.png" v-else>
+            </div>
+            <p><span class="user-name-point">{{user}}</span>の投稿</p>
+          </div>
+        </div>
         <div class="comment-content" v-for="(comment,index) in comments" :key="index">
-          <nuxt-link :to="{name: 'mypage-id', params:{id: comment.User.Id}}" @click.native="unLockScroll">
-            <div class="comment-image-wrapper">
-              <img v-lazy="'data:image/jpg;base64,'+comment.User.Imageprofile.Image" class="user-image"  v-if="comment.User.Imageprofile">
-              <img src="~/assets/image/noimage.png" class="user-image" v-else>
-            </div>
-            <div class="content-wrapper">
+          <div class="comment-image-wrapper">
+            <img v-lazy="'data:image/jpg;base64,'+comment.User.Imageprofile.Image" class="user-image"  v-if="comment.User.Imageprofile">
+            <img src="~/assets/image/noimage.png" class="user-image" v-else>
+          </div>
+          <div class="content-wrapper">
+            <nuxt-link :to="{name: 'mypage-id', params:{id: comment.User.Id}}" @click.native="unLockScroll">
               <p class="comment-user-name">{{comment.User.Name}}</p>
-              <p class="comment-text">{{comment.Comment}}</p>
-            </div>
-          </nuxt-link>
+            </nuxt-link>
+            <p class="comment-text">{{comment.Comment}}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -24,7 +32,9 @@
 <script>
 export default {
   props:{
-    comments: Array
+    comments: Array,
+    user: String,
+    image: Object
   },
 
   methods:{
@@ -93,48 +103,108 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 10px;
-    border: 2px solid #4285f4;
+    border: 1px solid #dcdcdc;
     overflow: scroll;
   }
 
   .comment-header{
     position: sticky;
     width: 100%;
+    margin: 0 auto;
     z-index: 101;
     background-color: #fff;
     top: 0;
-    border-bottom: 1px solid #4285f4;
+    border-bottom: 1px solid #dcdcdc;
+  }
 
+  .header-wrapper{
+    display: flex;
+    margin: 0 auto;
+    text-align: center;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2% 0;
+  }
+
+  .user-name-point{
+    font-weight: bold;
+  }
+
+  .post-user-image-wrapper{
+    position: relative;
+    width: 10%;
+    max-width: 10%;
+    height: auto;
+    border-radius: 50%;
+    border: 1px solid #dcdcdc;
+  }
+
+  .post-user-image-wrapper::before{
+    content: "";
+    display: block;
+    padding-top: 100%;
+  }
+
+  .post-user-image{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    object-fit: cover;
   }
 
   .comment-content{
     display: flex;
     align-items: center;
-    padding: 8px;
+    padding: 2%;
     position: relative;
-    border-bottom: 1px solid #8e8e8e;
     background-color: #fafafa;
   }
 
   .comment-image-wrapper{
-    width: 80px;
-    height: 80px;
+    position: relative;
+    width: 10%;
+    max-width: 10%;
+    height: auto;
+    border-radius: 50%;
+    border: 1px solid #dcdcdc;
+    margin: 0 2%;
+  }
+
+  .comment-image-wrapper::before{
+    content: "";
+    display: block;
+    padding-top: 100%;
   }
 
   .user-image{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    border: 1px solid #4285f4;
+
+  }
+
+  .content-wrapper{
+    display: flex;
+    align-items: center;
   }
 
   .comment-user-name{
     font-weight: bold;
-    position: absolute;
     font-size: 20px;
-    top: 9%;
-    left: 20%;
+    text-align: left;
   }
 
   .comment-text{
@@ -162,6 +232,19 @@ export default {
     .comment-number{
       font-size: 8px;
       width: 46%;
+    }
+
+    .comment-modal{
+      width: 75%;
+      height: 45%
+    }
+
+    .comment-user-name{
+      font-size: 8px;
+    }
+
+    .comment-text{
+      font-size: 8px;
     }
   }
 </style>
