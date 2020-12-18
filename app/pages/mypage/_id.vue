@@ -194,6 +194,7 @@ export default {
   .profile-user-name{
     font-size: 1.4rem;
     text-align: left;
+    margin-left: 6%;
     margin-right: 2%;
   }
 

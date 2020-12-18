@@ -5,12 +5,13 @@
   text-align: center;
   margin: 0 auto;
   padding-top: 5%;
-  background-color: #ffffff;
+  background-color: #fafafa;
 
 }
 
 .all-wrapper{
   height: 100vh;
+  background-color: #fafafa;
 }
 
 /* rem対応 */
@@ -18,7 +19,9 @@ html {
   font-size: 62.5%;
   padding:0;
   margin:0;
-  height:100%
+  height:100%;
+  background-color: #fafafa;
+
 }
 
 @media screen and (min-width:320px) and (max-width:414px){
