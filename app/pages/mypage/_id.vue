@@ -2,7 +2,7 @@
 <div class="all-wrapper">
   <AppHeader></AppHeader>
   <div class="container">
-    <client-only>
+    <cliant-only>
       <div class="profile-area">
         <div class="profile-photo-wrapper">
           <div class="photo-image">
@@ -17,7 +17,7 @@
           <div class="user-info">
             <h2 class="profile-user-name">{{data.Name}}</h2>
             <div class="follow-area" v-if="sessionUserId && sessionUserId != data.Id">
-              <p class="un-follow" @click="follow" data-id="0"  v-if="!followers.map(follower=>follower.Id).includes(sessionUserId)">フォローする</p>
+              <p class="un-follow" @click="follow" data-id="0"  v-if="!alreadyFollow">フォローする</p>
               <p class="follow" @click="follow" data-id="1" v-else>フォロー中</p>
             </div>
           </div>
@@ -52,7 +52,7 @@
           </nuxt-link>
         </div>
       </div>
-    </client-only>
+    </cliant-only>
   </div>
 </div>
 </template>
@@ -88,6 +88,23 @@ export default {
       const data = sessionExist ? this.$store.state.session.data[0].Id : 0;
       return data;
     },
+    //フォローしているかチェック
+    alreadyFollow(){
+      const followers = this.followers;
+      const myId = this.sessionUserId;
+      let followersId;
+      if(!followers){
+        return
+      }
+
+      followersId = followers.map(follower =>{
+        return follower.Id
+      })
+
+      if(followersId.includes(myId)){
+        return true
+      }
+    }
   },
 
   methods: {
@@ -115,6 +132,8 @@ export default {
           e.target.style.color = "#4385f4";
           e.target.innerHTML = "フォロー中";
           e.target.dataset.id = 1;
+          this.followerNumber += 1
+
         }else{
           alert("フォローに失敗しました");
         }
@@ -128,6 +147,7 @@ export default {
           e.target.style.color = "#ffffff";
           e.target.innerHTML = "フォローする";
           e.target.dataset.id = 0;
+          this.followerNumber -= 1
         }else{
           alert("フォロー解除に失敗しました");
         }

@@ -4,6 +4,7 @@
   <div class="container">
     <client-only>
       <h1>Post Form</h1>
+      <p>画像を選択してください</p>
       <InputPhoto classname="image-input"></InputPhoto>
       <TextArea classname="text-input"></TextArea>
       <SubmitButton @click.native="post"></SubmitButton>
