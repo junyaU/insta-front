@@ -4,8 +4,8 @@
   <div class="container">
     <h1 class="user-top-text">{{followData.data.Username}}</h1>
     <div class="follow-info-toggle">
-      <h1 class="followee-head" data-id="1" @click="toggleFollowInfo">フォロー</h1>
-      <h1 class="follower-head" data-id="0" @click="toggleFollowInfo">フォロワー</h1>
+      <h3 class="followee-head" data-id="1" @click="toggleFollowInfo">フォロー中</h3>
+      <h3 class="follower-head" data-id="0" @click="toggleFollowInfo">フォロワー</h3>
     </div>
     <div class="follow-content followee-content">
       <div class="user-content" v-for="(followee, index) in followData.data.Followee" :key="index">
@@ -14,7 +14,7 @@
           <img src="~/assets/image/noimage.png" v-else>
         </div>
         <nuxt-link :to="{name: 'mypage-id', params:{id: followee.Id}}">
-          <h1 class="user-name">{{followee.Name}}</h1>
+          <p class="user-name">{{followee.Name}}</p>
         </nuxt-link>
       </div>
     </div>
@@ -25,7 +25,7 @@
           <img src="~/assets/image/noimage.png" v-else>
         </div>
         <nuxt-link :to="{name: 'mypage-id', params:{id: follower.Id}}">
-          <h1 class="user-name">{{follower.Name}}</h1>
+          <p class="user-name">{{follower.Name}}</p>
         </nuxt-link>
       </div>
     </div>
@@ -81,34 +81,34 @@ export default {
 
   .follow-info-toggle{
     display: flex;
-    width: 35%;
+    width: 70%;
     margin: 0 auto;
-    justify-content: space-around;
     border-bottom: none;
   }
 
   .followee-head{
+    margin-right: 2%;
     background-color: #4285f4;
     color: #ffffff;
+    padding: 1%;
     border-radius: 3px 3px 0 0;
     text-shadow: 0 -1px 0 rgba(0,0,0,.2);
-    width: 45%;
     user-select: none;
   }
 
   .follower-head{
-    color: White;
+    color: #ffffff;
     background: LightGray;
+    padding: 1%;
     border-radius: 3px 3px 0 0;
     font-weight: bold;
     text-shadow: 0 -1px 0 rgba(0,0,0,.2);
-    width:45%;
     user-select: none;
   }
 
   .follow-content{
-    width: 45%;
-    border-radius: 3px;
+    width: 70%;
+    border-radius: 0 3px 3px 3px;
     border: 1px solid #4285f4;
     border-top: 4px solid #4285f4;
     margin: 0 auto;
@@ -122,18 +122,30 @@ export default {
   }
 
   .img-wrapper{
-    width: 100px;
-    height: 100px;
     position: relative;
-    border: 1px solid  #cccc;
+    width: 10%;
+    max-width: 10%;
+    height: auto;
     border-radius: 50%;
   }
 
+  .img-wrapper::before{
+    content: "";
+    display: block;
+    padding-top: 100%;
+  }
+
   .img-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
+
   }
 
   .user-name{
@@ -143,6 +155,5 @@ export default {
   .follower-content{
     display: none;
   }
-
 
 </style>
