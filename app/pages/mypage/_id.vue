@@ -22,7 +22,7 @@
             </div>
             <div class="profile-message-area" v-if="sessionUserId && sessionUserId != data.Id">
               <nuxt-link :to="{name: 'chat-id', params:{id: data.Id}}">
-                <p class="profile-message-button"  v-if="alreadyFollow">メッセージを送信</p>
+                <p class="profile-message-button"  v-show="alreadyFollow">メッセージを送信</p>
               </nuxt-link>
             </div>
           </div>
@@ -122,6 +122,7 @@ export default {
       const unFollowDom = document.querySelector(".un-follow");
       const followDom = document.querySelector(".follow");
       const alreadyFollow = e.target.getAttribute("data-id");
+      const profileMessageButton = document.querySelector(".profile-message-button");
 
       if(!meId){
         return
@@ -133,6 +134,7 @@ export default {
 
         const followData = await this.$axios.post(followUrl, formData);
         if(followData.status == 200){
+          profileMessageButton.style.display = "inline";
           e.target.style.background = "#ffffff";
           e.target.style.color = "#4385f4";
           e.target.innerHTML = "フォロー中";
@@ -148,6 +150,7 @@ export default {
 
         const unFollowData = await this.$axios.post(unFollowUrl, formData);
         if(unFollowData.status == 200){
+          profileMessageButton.style.display = "none";
           e.target.style.background = "#4385f4";
           e.target.style.color = "#ffffff";
           e.target.innerHTML = "フォローする";
