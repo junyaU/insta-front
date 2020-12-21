@@ -20,7 +20,9 @@
     "nuxt": "^2.0.0",
     "universal-cookie": "^4.0.4",
     "vue-lazyload": "^1.3.3",
-    "vuex-persistedstate": "^4.0.0-beta.1"
+    "vuex-persistedstate": "^4.0.0-beta.1",
+    "websocket": "^1.0.33",
+    "ws": "^7.4.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",

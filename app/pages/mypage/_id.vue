@@ -20,6 +20,11 @@
               <p class="un-follow" @click="follow" data-id="0"  v-if="!alreadyFollow">フォローする</p>
               <p class="follow" @click="follow" data-id="1" v-else>フォロー中</p>
             </div>
+            <div class="profile-message-area" v-if="sessionUserId && sessionUserId != data.Id">
+              <nuxt-link :to="{name: 'chat-id', params:{id: data.Id}}">
+                <p class="profile-message-button"  v-if="alreadyFollow">メッセージを送信</p>
+              </nuxt-link>
+            </div>
           </div>
           <div class="number-info">
             <div>
@@ -165,7 +170,6 @@ export default {
     width: 100%;
     margin: 0 auto;
     padding-bottom: 1% ;
-
     position: relative;
   }
 
@@ -250,6 +254,17 @@ export default {
     border: 1px solid #4385f4;
   }
 
+  .profile-message-area{
+    margin-left: 1%;
+  }
+
+  .profile-message-button{
+    border: 1px solid #dcdcdc;
+    padding: 2px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 1rem;
+  }
 
   .post-area{
     display: flex;
@@ -263,7 +278,6 @@ export default {
     width:33.3%;
     padding-top: 33.3%
   }
-
 
   .post-image{
     position: absolute;
@@ -285,6 +299,10 @@ export default {
     }
 
     .follow{
+      font-size: 5px;
+    }
+
+    .profile-message-button{
       font-size: 5px;
     }
   }
