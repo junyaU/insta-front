@@ -23,7 +23,6 @@
           </div>
         </div>
     </div>
-
   </div>
 </div>
 </template>
@@ -93,30 +92,31 @@ export default {
     this.ws.addEventListener("message", (e) =>{
       const chatMessage = document.createElement("p");
       const messageContent = document.createElement("div");
-      //メッセージデータ
       const msg = JSON.parse(e.data);
+      const ownCheck = msg.FromId == myId;
 
-      if(msg.FromId == myId){
-        chatMessage.style.background = "#efefef";
-        chatMessage.style.color = "#000000";
-        chatMessage.style.padding = "2%";
-        chatMessage.style.margin = "1% 3% 0 12%";
-        chatMessage.style.float = "right";
-        chatMessage.style.clear = "both";
-        chatMessage.style.textAlign = "left";
-        chatMessage.style.borderRadius = "8px"
-      }else{
-        chatMessage.style.background = "#ffffff";
-        chatMessage.style.color = "#000000";
-        chatMessage.style.padding = "2%";
-        chatMessage.style.margin = "1% 12% 0 3%";
-        chatMessage.style.float = "left";
-        chatMessage.style.clear = "both";
-        chatMessage.style.textAlign = "left";
-        chatMessage.style.borderRadius = "8px";
-        chatMessage.style.border = "1px solid rgba(var(--bb2,239,239,239),1)";
-      }
+      //送り主によってスタイルを切り替え
+      const chatBackColor = (ownCheck) ? "#efefef" : "#ffffff";
+      const chatBorder = (ownCheck) ? "none" : "1px solid rgba(var(--bb2,239,239,239),1)";
+      const chatMargin = (ownCheck) ? "1% 3% 0 12%" : "1% 12% 0 3%";
+      const chatFloat = (ownCheck) ? "right" : "left";
+      const chatFontColor = "#000000";
+      const chatPadding = "2%";
+      const chatClear = "both";
+      const chatTextAlign = "left";
+      const chatborderRadius = "8px";
+
+      chatMessage.style.background = chatBackColor;
+      chatMessage.style.color = chatFontColor;
+      chatMessage.style.padding = chatPadding;
+      chatMessage.style.margin =  chatMargin;
+      chatMessage.style.float = chatFloat;
+      chatMessage.style.clear = chatClear;
+      chatMessage.style.textAlign = chatTextAlign;
+      chatMessage.style.borderRadius = chatborderRadius;
+      chatMessage.style.border = chatBorder;
       chatMessage.innerHTML = msg.Text;
+
       messageContent.appendChild(chatMessage);
       talkContent.appendChild(messageContent);
 
@@ -136,7 +136,6 @@ export default {
   }
 
   .talk-wrapper{
-    margin: 0 auto;
     width: 100%;
     height: 100%;
   }
@@ -238,7 +237,7 @@ export default {
     border: none;
     color: #4285f4;
     font-weight: bold;
-    background-color: #fafafa;
+    background: none;
   }
 
   .chat-submit-button:focus{
@@ -247,7 +246,7 @@ export default {
   }
 
   @media screen and (min-width:320px) and (max-width:414px) {
-    html, body { height: 100%; }
+    html, body { height: 90%; }
 
     .container{
       padding-top: 14%;
