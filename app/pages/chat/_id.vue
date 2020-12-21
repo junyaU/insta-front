@@ -253,7 +253,7 @@ export default {
     }
 
     .talk-content{
-      height: 85%;
+      height: 72%;
     }
 
     .chat-submit-button{
