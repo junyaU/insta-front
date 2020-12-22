@@ -6,17 +6,24 @@
           <img src="~/assets/image/homeicon.png" class="icon">
         </nuxt-link>
       </div>
-      <div class="header-parts header-img-wrapper">
-        <nuxt-link to="/" v-if="!this.$store.state.session.data[0]">
-          <img  src="~/assets/image/loginicon.png" class="icon no-login-icon">
-        </nuxt-link>
-        <nuxt-link :to="{name: 'mypage-id', params: {id: sessionUserId}}" v-else>
-          <img v-lazy="imgData" class="icon user-icon">
-        </nuxt-link>
+      <div class="header-parts">
+        <div class="header-img-wrapper">
+          <nuxt-link to="/" v-if="!this.$store.state.session.data[0]">
+            <img  src="~/assets/image/loginicon.png" class="icon no-login-icon">
+          </nuxt-link>
+          <nuxt-link :to="{name: 'mypage-id', params: {id: sessionUserId}}" v-else>
+            <img v-lazy="imgData" class="icon user-icon">
+          </nuxt-link>
+        </div>
       </div>
       <div class="header-parts">
         <nuxt-link to="/postform">
           <img src="~/assets/image/posticon.png" class="icon">
+        </nuxt-link>
+      </div>
+      <div class="header-parts">
+        <nuxt-link :to="{name :'chatlist-id', params:{id: sessionUserId}}">
+          <img src="~/assets/image/chat_icon.png" class="icon">
         </nuxt-link>
       </div>
       <div class="header-parts">
@@ -98,10 +105,11 @@ export default {
   }
 
   .header-img-wrapper{
+    cursor: pointer;
     position: relative;
     border-radius: 50%;
-    width:8%;
-    max-width:8%;
+    width:100%;
+    max-width:100%;
     height: auto;
   }
 
