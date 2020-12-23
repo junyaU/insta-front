@@ -3,7 +3,7 @@
   <AppHeader></AppHeader>
   <div class="container">
     <div class="chat-page-user-wrapper">
-      <h2>{{userData.data.Name}}</h2>
+      <h2>{{userData.data.Name}}のトーク</h2>
     </div>
     <div class="talk-list-wrapper">
       <div class="talk-list-content" v-for="(data, index) in chatData.data" :key="index">
@@ -17,6 +17,7 @@
             <p class="talk-user-message">{{data.LatestMessage}}</p>
           </nuxt-link>
         </div>
+        <p class="chat-time-text">{{data.time}}</p>
       </div>
       <h2 class="non-chat-text" v-if="!chatData.data">トーク履歴がありません</h2>
     </div>
@@ -29,12 +30,27 @@ export default {
   middleware: 'logincheck',
   async asyncData({app, params}){
     const paramId = params.id;
-    const [userData, chatData, imageData] = await Promise.all([
+    const [userData, chatData] = await Promise.all([
       app.$axios.get(`/api/user/${paramId}`),
       app.$axios.get(`/api/auth/getchatlist/${paramId}`),
-
     ]);
-    return {userData, chatData}
+
+  chatData.data.forEach(data => {
+    //時間をフォーマット
+    const timeData = data.time.replace(/[A-Z]/g, " ");
+    const chatDate = new Date(timeData.replace(/-/g,"/"));
+    const nowDate = new Date();
+    const todayCheck = (`${chatDate.getMonth()+1}${chatDate.getDate()}`) == (`${nowDate.getMonth()+1}${nowDate.getDate()}`);
+
+    //本日なら時刻を、それ以外なら日にちを返す
+    if(todayCheck){
+      data.time = `${chatDate.getHours()}:${('00'+chatDate.getMinutes()).slice(-2)}`;
+    }else{
+      data.time = `${chatDate.getMonth()+1}/${('00'+chatDate.getDate()).slice(-2)}`;
+    }
+  });
+
+  return {userData, chatData}
   },
 
   computed:{
@@ -49,7 +65,16 @@ export default {
 
 <style scoped>
   .chat-page-user-wrapper{
-    border: 1px solid #dcdcdc;
+    text-align: left;
+    border-bottom: 1px solid #dcdcdc;
+  }
+
+  .chat-page-user-wrapper h2{
+    margin-left: 4%;
+  }
+
+  .talk-list-wrapper{
+    position: relative;
   }
 
   .talk-list-content{
@@ -58,6 +83,7 @@ export default {
     margin: 2% 0;
     padding: 0 7%;
     user-select: none;
+    position: relative;
   }
 
   .talk-user-image-wrapper{
@@ -100,17 +126,34 @@ export default {
     color: #8e8e8e;
   }
 
+  .chat-time-text{
+    position: absolute;
+    right: 1%;
+    top: 0;
+    color: #8e8e8e;
+
+
+  }
+
   .non-chat-text{
     margin-top: 5%;
   }
 
   @media screen and (min-width:320px) and (max-width:414px) {
+    .chat-page-user-wrapper{
+      font-size: 12px;
+    }
+
     .talk-user-text{
       font-size: 8px;
     }
 
     .non-chat-text{
       font-size: 16px;
+    }
+
+    .chat-time-text{
+      font-size: 10px;
     }
   }
 </style>

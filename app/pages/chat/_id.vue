@@ -12,8 +12,14 @@
       </div>
       <div class="talk-content">
         <div class="message-content" v-for="(data,index) in chatData" :key="index">
-          <p class="from-message" v-if="data.From.Id == sessionUserId">{{data.Text}}</p>
-          <p class="to-message" v-else>{{data.Text}}</p>
+          <div class="from-message" v-if="data.From.Id == sessionUserId">
+            <p class="from-message-time">{{data.Created}}</p>
+            <p class="from-message-text">{{data.Text}}</p>
+          </div>
+          <div class="to-message" v-else>
+            <p class="to-message-text">{{data.Text}}</p>
+            <p class="to-message-time">{{data.Created}}</p>
+          </div>
         </div>
       </div>
         <div class="talk-input-area">
@@ -43,6 +49,15 @@ export default {
     if(profileImageData.data.image){
       imageData = 'data:image/jpg;base64,'+profileImageData.data.image;
     }
+
+    chatData.forEach(data => {
+      //時間をフォーマット Tips:safariではnew Dateでハイフンが含まれているとNanとなってしまうので置き換える必要あり
+      const timeData = data.Created.replace(/[A-Z]/g, " ");
+      const timeDataFormat = new Date(timeData.replace(/-/g,"/"));
+      const chatTime = `${('00'+timeDataFormat.getHours()).slice(-2)}:${('00'+timeDataFormat.getMinutes()).slice(-2)}`;
+      data.Created = chatTime;
+    });
+
     return {datas,imageData, chatData}
   },
 
@@ -73,6 +88,7 @@ export default {
         alert("１００文字以下で入力してください");
         return;
       }
+
       this.ws.send(
         JSON.stringify({
             FromId: this.sessionUserId,
@@ -91,34 +107,61 @@ export default {
     this.ws = new WebSocket(`wss://${process.env.API}/api/auth/chat`);
     this.ws.addEventListener("message", (e) =>{
       const chatMessage = document.createElement("p");
+      const chatTime = document.createElement("p");
+      const chatWrapper = document.createElement("div");
       const messageContent = document.createElement("div");
       const msg = JSON.parse(e.data);
       const ownCheck = msg.FromId == myId;
+      const nowTime = new Date();
+      const timeValue = `${('00'+nowTime.getHours()).slice(-2)}:${('00'+nowTime.getMinutes()).slice(-2)}`;
 
       //送り主によってスタイルを切り替え
       const chatBackColor = (ownCheck) ? "#efefef" : "#ffffff";
       const chatBorder = (ownCheck) ? "none" : "1px solid rgba(var(--bb2,239,239,239),1)";
-      const chatMargin = (ownCheck) ? "1% 3% 0 12%" : "1% 12% 0 3%";
-      const chatFloat = (ownCheck) ? "right" : "left";
       const chatFontColor = "#000000";
       const chatPadding = "2%";
-      const chatClear = "both";
-      const chatTextAlign = "left";
       const chatborderRadius = "8px";
+      const wrapperDisplay = "flex";
+      const wrapperAlignItems = "flex-end";
+      const wrapperJustifyContent = (ownCheck) ? "flex-end" : "flex-start";
+      const wrapperTextAlign = "left";
+      const wrapperMarginTop = "1%";
+      const wrapperPadding = "0 3%";
+      const wrapperWidth = "100%";
+      const timeColor = "#8e8e8e";
+      const timeMargin = (ownCheck) ? "0 1% 0 0" : "0 0 0 1%";
+      const timeFontSize = "10px";
 
       chatMessage.style.background = chatBackColor;
       chatMessage.style.color = chatFontColor;
       chatMessage.style.padding = chatPadding;
-      chatMessage.style.margin =  chatMargin;
-      chatMessage.style.float = chatFloat;
-      chatMessage.style.clear = chatClear;
-      chatMessage.style.textAlign = chatTextAlign;
       chatMessage.style.borderRadius = chatborderRadius;
       chatMessage.style.border = chatBorder;
-      chatMessage.innerHTML = msg.Text;
+      chatWrapper.style.display = wrapperDisplay;
+      chatWrapper.style.alignItems = wrapperAlignItems;
+      chatWrapper.style.justifyContent = wrapperJustifyContent;
+      chatWrapper.style.textAlign = wrapperTextAlign;
+      chatWrapper.style.marginTop = wrapperMarginTop;
+      chatWrapper.style.padding = wrapperPadding;
+      chatWrapper.style.width = wrapperWidth;
+      chatTime.style.color = timeColor;
+      chatTime.style.margin = timeMargin;
+      chatTime.style.fontSize = timeFontSize;
 
-      messageContent.appendChild(chatMessage);
-      talkContent.appendChild(messageContent);
+      chatMessage.innerHTML = msg.Text;
+      chatTime.innerHTML = timeValue;
+
+      //時間の表記の兼ね合いで前後を変えなければいけない
+      if(ownCheck){
+        chatWrapper.appendChild(chatTime);
+        chatWrapper.appendChild(chatMessage);
+      }else{
+        chatWrapper.appendChild(chatMessage);
+        chatWrapper.appendChild(chatTime);
+      }
+
+      messageContent.appendChild(chatWrapper);
+      talkContent.appendChild(messageContent)
 
       //トーク最下層にスクロール
       const screenBottom = talkContent.scrollHeight - talkContent.clientHeight;
@@ -184,26 +227,50 @@ export default {
   }
 
   .from-message{
-    float: right;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    text-align: left;
+    margin-top: 1%;
+    padding: 0 3%;
+    width: 100%;
+  }
+
+  .from-message-text{
+    padding: 2%;
     color: #000000;
     background-color: #efefef;
-    padding: 2%;
     border-radius: 8px;
-    margin: 1% 3% 0 12%;
-    text-align: left;
-    clear: both;
+  }
+
+  .from-message-time{
+    color: #8e8e8e;
+    margin-right: 1%;
+    font-size: 10px;
   }
 
   .to-message{
-    float: left;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    margin-top: 1%;
+    padding: 0 3%;
+    width: 100%;
+    text-align: left;
+  }
+
+  .to-message-text{
     color: #000000;
     background-color: #ffffff;
-    padding: 2%;
-    border-radius: 8px;
     border: 1px solid rgba(var(--bb2,239,239,239),1);
-    margin: 1% 12% 0 3%;
-    text-align: left;
-    clear: both;
+    border-radius: 8px;
+    padding: 2%;
+  }
+
+  .to-message-time{
+    color: #8e8e8e;
+    margin-left: 1%;
+    font-size: 10px;
   }
 
   .talk-input-area{
@@ -258,6 +325,14 @@ export default {
 
     .chat-submit-button{
       width: 12%;
+    }
+
+    .from-message-time{
+      font-size: 8px;
+    }
+
+    .to-message-time{
+      font-size: 10px;
     }
   }
 </style>
