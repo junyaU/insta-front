@@ -3,7 +3,7 @@
   <AppHeader></AppHeader>
   <div class="container">
     <div class="chat-page-user-wrapper">
-      <h2>{{userData.data.Name}}</h2>
+      <h2>{{userData.data.Name}}のトーク</h2>
     </div>
     <div class="talk-list-wrapper">
       <div class="talk-list-content" v-for="(data, index) in chatData.data" :key="index">
@@ -38,7 +38,7 @@ export default {
   chatData.data.forEach(data => {
     //時間をフォーマット
     const timeData = data.time.replace(/[A-Z]/g, " ");
-    const chatDate = new Date(timeData);
+    const chatDate = new Date(timeData.replace(/-/g,"/"));
     const nowDate = new Date();
     const todayCheck = (`${chatDate.getMonth()+1}${chatDate.getDate()}`) == (`${nowDate.getMonth()+1}${nowDate.getDate()}`);
 
@@ -65,7 +65,12 @@ export default {
 
 <style scoped>
   .chat-page-user-wrapper{
+    text-align: left;
+    border-bottom: 1px solid #dcdcdc;
+  }
 
+  .chat-page-user-wrapper h2{
+    margin-left: 4%;
   }
 
   .talk-list-wrapper{
@@ -123,10 +128,10 @@ export default {
 
   .chat-time-text{
     position: absolute;
+    right: 1%;
+    top: 0;
     color: #8e8e8e;
-    right: 8%;
-    top: 50%;
-    transform: translate(0, -50%);
+
 
   }
 
@@ -135,12 +140,20 @@ export default {
   }
 
   @media screen and (min-width:320px) and (max-width:414px) {
+    .chat-page-user-wrapper{
+      font-size: 12px;
+    }
+
     .talk-user-text{
       font-size: 8px;
     }
 
     .non-chat-text{
       font-size: 16px;
+    }
+
+    .chat-time-text{
+      font-size: 10px;
     }
   }
 </style>
