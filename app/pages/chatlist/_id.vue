@@ -17,6 +17,7 @@
             <p class="talk-user-message">{{data.LatestMessage}}</p>
           </nuxt-link>
         </div>
+        <p class="chat-time-text">{{data.time}}</p>
       </div>
       <h2 class="non-chat-text" v-if="!chatData.data">トーク履歴がありません</h2>
     </div>
@@ -29,12 +30,27 @@ export default {
   middleware: 'logincheck',
   async asyncData({app, params}){
     const paramId = params.id;
-    const [userData, chatData, imageData] = await Promise.all([
+    const [userData, chatData] = await Promise.all([
       app.$axios.get(`/api/user/${paramId}`),
       app.$axios.get(`/api/auth/getchatlist/${paramId}`),
-
     ]);
-    return {userData, chatData}
+
+  chatData.data.forEach(data => {
+    //時間をフォーマット
+    const timeData = data.time.replace(/[A-Z]/g, " ");
+    const chatDate = new Date(timeData);
+    const nowDate = new Date();
+    const todayCheck = (`${chatDate.getMonth()+1}${chatDate.getDate()}`) == (`${nowDate.getMonth()+1}${nowDate.getDate()}`);
+
+    //本日なら時刻を、それ以外なら日にちを返す
+    if(todayCheck){
+      data.time = `${chatDate.getHours()}:${('00'+chatDate.getMinutes()).slice(-2)}`;
+    }else{
+      data.time = `${chatDate.getMonth()+1}/${('00'+chatDate.getDate()).slice(-2)}`;
+    }
+  });
+
+  return {userData, chatData}
   },
 
   computed:{
@@ -49,7 +65,11 @@ export default {
 
 <style scoped>
   .chat-page-user-wrapper{
-    border: 1px solid #dcdcdc;
+
+  }
+
+  .talk-list-wrapper{
+    position: relative;
   }
 
   .talk-list-content{
@@ -58,6 +78,7 @@ export default {
     margin: 2% 0;
     padding: 0 7%;
     user-select: none;
+    position: relative;
   }
 
   .talk-user-image-wrapper{
@@ -98,6 +119,15 @@ export default {
 
   .talk-user-message{
     color: #8e8e8e;
+  }
+
+  .chat-time-text{
+    position: absolute;
+    color: #8e8e8e;
+    right: 8%;
+    top: 50%;
+    transform: translate(0, -50%);
+
   }
 
   .non-chat-text{
