@@ -54,6 +54,18 @@
         <div class="post-wrapper" v-for="(post, index) in data.Posts" :key="index">
           <nuxt-link :to="{name: 'postdetail-id', params:{id: post.Id}}">
             <img v-lazy="post.Image" class="post-image">
+            <div class="post-overlay">
+              <div class="overlay-content">
+                <div class="favorite-cover-wrapper">
+                  <img src="~/assets/image/post_cover_favorite.png">
+                  <p>{{post.Favonum}}</p>
+                </div>
+                <div class="comment-cover-wrapper">
+                  <img src="~/assets/image/post_cover_comment.png">
+                  <p>{{post.Comments}}</p>
+                </div>
+              </div>
+            </div>
           </nuxt-link>
         </div>
       </div>
@@ -70,12 +82,17 @@ export default {
       app.$axios.$get(`/api/user/${paramId}`),
       app.$axios.$get(`/api/getprofileimage/${paramId}`),
       app.$axios.$get(`/api/followUser/${paramId}`)
-    ])
+    ]);
 
     const followers =followData.Follower
     const followeeNumber = (followData.Followee) ? followData.Followee.length : 0;
     const followerNumber = (followData.Follower) ? followData.Follower.length : 0;
     const postNumber = (data.Posts) ? data.Posts.length : 0;
+
+    //コメント数
+    data.Posts.forEach(post =>{
+      post.Comments = post.Comments.length;
+    })
 
     return {data,  profileImageData,postNumber, followerNumber, followeeNumber, followers}
   },
@@ -283,6 +300,64 @@ export default {
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+    .post-overlay{
+      display: none;
+    }
+
+  .post-image:hover + .post-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    display: block;
+    background-color: rgba(0,0,0,0.4);
+  }
+
+  .post-overlay:hover{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    display: block;
+    background-color: rgba(0,0,0,0.4);
+  }
+
+  .favorite-cover-wrapper{
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    color: #ffffff;
+  }
+
+  .favorite-cover-wrapper img{
+    width: 100%;
+    height: 100%;
+  }
+
+  .comment-cover-wrapper{
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    color: #ffffff;
+  }
+  .comment-cover-wrapper img{
+    width: 100%;
+    height: 100%;
+  }
+
+  .overlay-content{
+    position: absolute;
+    display: flex;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
   }
 
   @media screen and (min-width:320px) and (max-width:414px) {
