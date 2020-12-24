@@ -2,7 +2,7 @@
 <div class="all-wrapper">
   <AppHeader></AppHeader>
   <div class="container">
-    <h1>いいねしたユーザー</h1>
+    <h1 class="favorite-header-text">いいねしたユーザー</h1>
     <client-only >
     <div class="user-wrapper" v-if="favoriteUsers.Favorite[0]">
       <div v-for=" (user, index) in favoriteUsers.Favorite" :key="index">
@@ -51,27 +51,39 @@ export default {
 
 <style scoped>
   .user-wrapper{
-    border: 1px solid #cccc;
-    width: 40%;
+    width: 100%;
     margin: 0 auto;
   }
 
   .user-content{
     display: flex;
+    justify-content: center;
     align-items: center;
     margin: 10px 5px;
 
   }
 
   .image-wrapper{
-    width: 100px;
-    height: 100px;
+    width: 12%;
+    max-width: 12%;
+    height: auto;
     position: relative;
     border: 1px solid  #cccc;
     border-radius: 50%;
   }
 
+  .image-wrapper::before{
+    content: "";
+    display: block;
+    padding-top: 100%;
+  }
+
   .image-wrapper img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
     width: 100%;
     height: 100%;
     border-radius: 50%;
@@ -92,17 +104,14 @@ export default {
   }
 
   @media screen and (min-width:320px) and (max-width:414px){
-    .user-wrapper{
-      width: 70%;
+
+    .favorite-header-text{
+      font-size: 22px;
     }
 
     .user-name{
-      font-size: 15px;
+      font-size: 18px;
     }
 
-    .image-wrapper{
-      width: 80px;
-      height: 80px;
-    }
   }
 </style>
