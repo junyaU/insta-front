@@ -8,7 +8,7 @@
     <div class="talk-list-wrapper">
       <div class="talk-list-content" v-for="(data, index) in chatData.data" :key="index">
         <div class="talk-user-image-wrapper">
-          <img  class="talk-user-image" v-lazy="'data:image/jpg;base64,'+data.User.Imageprofile.Image" v-if="data.User.Imageprofile">
+          <img  class="talk-user-image" v-lazy="data.User.Imageprofile.Image" v-if="data.User.Imageprofile">
           <img class="talk-user-image" src="~/assets/image/noimage.png" v-else>
         </div>
         <div class="talk-user-text">
