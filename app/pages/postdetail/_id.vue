@@ -44,8 +44,6 @@ export default {
     const data = await app.$axios.get(`/api/getpostdetail/${paramId}`);
     const postData = data.data;
 
-    console.log(postData)
-
     return {postData}
   },
   computed:{
