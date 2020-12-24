@@ -12,7 +12,8 @@
             <img  src="~/assets/image/loginicon.png" class="icon no-login-icon">
           </nuxt-link>
           <nuxt-link :to="{name: 'mypage-id', params: {id: sessionUserId}}" v-else>
-            <img v-lazy="imgData" class="icon user-icon">
+            <img v-lazy="imgData.image" class="icon user-icon" v-if="imgData.image">
+            <img src="~/assets/image/noimage.png" class="icon user-icon" v-else>
           </nuxt-link>
         </div>
       </div>
@@ -62,16 +63,8 @@ export default {
     },
 
     async getImage(){
-      let imageData = "";
-      const imageHeader = 'data:image/jpg;base64,';
       const profileImagedata = await this.$axios.get(`/api/getprofileimage/${this.sessionUserId}`);
-
-      if(profileImagedata.data.image){
-        imageData = imageHeader + profileImagedata.data.image;
-      }else{
-        imageData = require("~/assets/image/noimage.png");
-      }
-      this.imgData = imageData;
+      this.imgData = profileImagedata.data
     },
   },
   created(){

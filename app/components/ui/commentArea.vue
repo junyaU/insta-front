@@ -31,7 +31,7 @@ export default {
 
       const commentData = await this.$axios.post(apiUrl, formData);
       if (commentData.status == 200){
-        this.$router.push("/postform")
+        this.$router.push(`mypage/${userId}`);
       }
     }
   }

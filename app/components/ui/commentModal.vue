@@ -6,7 +6,7 @@
         <div class="comment-header">
           <div class="header-wrapper">
             <div class="post-user-image-wrapper">
-              <img class="post-user-image" v-lazy="'data:image/jpg;base64,'+image.Image" alt="" v-if="image">
+              <img class="post-user-image" v-lazy="image.Image" alt="" v-if="image">
               <img class="post-user-image" src="~assets/image/noimage.png" v-else>
             </div>
             <p><span class="user-name-point">{{user}}</span>の投稿</p>
@@ -14,7 +14,7 @@
         </div>
         <div class="comment-content" v-for="(comment,index) in comments" :key="index">
           <div class="comment-image-wrapper">
-            <img v-lazy="'data:image/jpg;base64,'+comment.User.Imageprofile.Image" class="user-image"  v-if="comment.User.Imageprofile">
+            <img v-lazy="comment.User.Imageprofile.Image" class="user-image"  v-if="comment.User.Imageprofile">
             <img src="~/assets/image/noimage.png" class="user-image" v-else>
           </div>
           <div class="content-wrapper">
