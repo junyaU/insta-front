@@ -35,19 +35,13 @@ export default {
     }
   },
   async asyncData({app, params}) {
-    let imageData = "";
-    const imageHeader = 'data:image/jpg;base64,';
     const paramId = params.id;
     const [data, profileImageData] = await Promise.all([
       app.$axios.$get(`/api/user/${paramId}`),
       app.$axios.$get(`/api/getprofileimage/${paramId}`),
     ]);
 
-    //画像データがあれば読み込む
-    if(profileImageData.image){
-      imageData = imageHeader + profileImageData.image;
-    }
-    return {data, imageData, imageHeader}
+    return {data, profileImageData}
   },
 
   methods:{

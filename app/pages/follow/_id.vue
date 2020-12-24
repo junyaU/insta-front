@@ -10,7 +10,7 @@
     <div class="follow-content followee-content">
       <div class="user-content" v-for="(followee, index) in followData.data.Followee" :key="index">
         <div class="img-wrapper">
-          <img v-lazy="'data:image/jpg;base64,'+followee.Imageprofile.Image" v-if="followee.Imageprofile">
+          <img v-lazy="followee.Imageprofile.Image" v-if="followee.Imageprofile">
           <img src="~/assets/image/noimage.png" v-else>
         </div>
         <nuxt-link :to="{name: 'mypage-id', params:{id: followee.Id}}">
@@ -21,7 +21,7 @@
     <div class="follow-content follower-content">
       <div class="user-content" v-for="(follower, index) in followData.data.Follower" :key="index">
         <div class="img-wrapper">
-          <img v-lazy="'data:image/jpg;base64,'+follower.Imageprofile.Image" v-if="follower.Imageprofile">
+          <img v-lazy="follower.Imageprofile.Image" v-if="follower.Imageprofile">
           <img src="~/assets/image/noimage.png" v-else>
         </div>
         <nuxt-link :to="{name: 'mypage-id', params:{id: follower.Id}}">

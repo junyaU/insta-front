@@ -8,7 +8,7 @@
         <div class="post-content" v-for="(data, index) in datas" :key="index">
           <div class="post-head">
             <div class="post-user-image-wrapper">
-              <img class="post-user-image" v-lazy="'data:image/jpg;base64,'+data.User.Imageprofile.Image" v-if="data.User.Imageprofile">
+              <img class="post-user-image" v-lazy="data.User.Imageprofile.Image" v-if="data.User.Imageprofile">
               <img class="post-user-image" src="~/assets/image/noimage.png" v-else>
             </div>
             <h4 class="post-user-name">
@@ -19,7 +19,7 @@
             <p class="post-delete-button" :data-id="data.Id" @click="deletePost" v-if="sessionUserId == data.User.Id">•••</p>
           </div>
           <div class="post-image-wrapper">
-            <img v-lazy="'data:image/jpg;base64,' +  data.Image" class="post-image-photo">
+            <img v-lazy="data.Image" class="post-image-photo">
           </div>
           <div class="post-button-area">
             <div class="post-button">
@@ -27,7 +27,7 @@
               <img class="favo-button buttons" src="~assets/image/favorited_button.png" @click="favorite" :data-id="data.Id" data-favorited="1" v-else>
             </div>
           </div>
-          <nuxt-link :to="{name: 'postdetail-id', params: {id: data.Id}}">
+          <nuxt-link :to="{name: 'favorite-id', params: {id: data.Id}}">
             <p class="favorite-user-list"><span class="favorite-number">{{data.Favonum}}人</span>が「いいね！」しました</p>
           </nuxt-link>
           <div class="post-comment-wrapper">

@@ -5,7 +5,7 @@
     <div class="talk-wrapper">
       <div class="talk-header">
         <div class="talk-head-img-wrapper">
-          <img class="talk-head-img" v-lazy="imageData" v-if="imageData">
+          <img class="talk-head-img" v-lazy="profileImageData.data.image" v-if="profileImageData.data.image">
           <img class="talk-head-img" src="~/assets/image/noimage.png" v-else>
         </div>
         <p>{{datas.Name}}</p>
@@ -45,10 +45,6 @@ export default {
 
     const datas = data.data
     const chatData = chatDatas.data
-    let imageData;
-    if(profileImageData.data.image){
-      imageData = 'data:image/jpg;base64,'+profileImageData.data.image;
-    }
 
     chatData.forEach(data => {
       //時間をフォーマット Tips:safariではnew Dateでハイフンが含まれているとNanとなってしまうので置き換える必要あり
@@ -58,7 +54,7 @@ export default {
       data.Created = chatTime;
     });
 
-    return {datas,imageData, chatData}
+    return {datas, profileImageData, chatData}
   },
 
   data(){
