@@ -65,6 +65,7 @@ export default {
       if(signup.data.status == "success"){
         const sessionData = await this.$axios.get(getSessionUrl);
         this.$store.commit("session/add", sessionData.data);
+        alert("登録に成功しました。")
         this.$router.push("/posthome");
       }else{
         alert("そのメールアドレスは既に使われています");

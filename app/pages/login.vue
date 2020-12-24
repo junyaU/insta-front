@@ -45,6 +45,7 @@ export default {
       if(login.data.status == "success"){
         const sessiondata = await this.$axios.get(getSessionUrl);
         this.$store.commit('session/add', sessiondata.data);
+        alert("ログインに成功しました");
         this.$router.push("/posthome");
       }else{
         alert("ログインに失敗しました")
